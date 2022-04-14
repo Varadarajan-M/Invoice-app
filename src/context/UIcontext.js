@@ -15,18 +15,18 @@ const themes = {
 export const UIcontext = createContext(themes);
 
 export const UIContextProvider = ({ children }) => {
-	const [mode, setMode] = useState(getTheme());
-	const [theme, setTheme] = useState(themes.lightMode);
+	const [mode, _setMode] = useState(getTheme);
+	const [theme, _setTheme] = useState(themes.lightMode);
 
 	useEffect(() => {
 		mode === 'light'
-			? setTheme(themes.darkMode)
-			: setTheme(themes.lightMode);
+			? _setTheme(themes.lightMode)
+			: _setTheme(themes.darkMode);
 		setLocalTheme(mode);
 	}, [mode]);
 
 	const switchTheme = () =>
-		mode === 'dark' ? setMode('light') : setMode('dark');
+		mode === 'dark' ? _setMode('light') : _setMode('dark');
 
 	return (
 		<UIcontext.Provider value={{ mode, switchTheme, theme }}>

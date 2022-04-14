@@ -1,3 +1,6 @@
+$lightblue: rgb(124, 93, 250);
+$lightblueTransparent: rgb(146, 119, 255);
+
 * {
 	margin: 0;
 	padding: 0;
@@ -8,6 +11,8 @@ body {
 	transition: 0.2s ease-in;
 }
 
+// Navbar styles
+
 .custom-navbar {
 	position: fixed;
 	left: 0;
@@ -16,26 +21,118 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
+
+	.brand-logo {
+		background: $lightblue;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-top-right-radius: 25%;
+		border-bottom-right-radius: 25%;
+		position: relative;
+		.logo {
+			z-index: 1;
+		}
+		&::after {
+			content: '';
+			position: absolute;
+			min-height: 50%;
+			min-width: 100%;
+			background-color: $lightblueTransparent;
+			bottom: 0;
+			border-top-left-radius: 25px;
+			border-bottom-right-radius: 30px;
+		}
+	}
+	.action-buttons {
+		display: flex;
+		justify-content: space-between;
+		.divider {
+			height: 1px;
+			opacity: 0.4;
+			background-color: $lightblue;
+		}
+	}
 }
 
 // large screens
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 910px) {
+	// Navbar styles for large screens
+
 	.custom-navbar {
 		height: 100vh;
-		width: 120px;
+		width: 100px;
 		flex-direction: column;
 		border-top-right-radius: 30px;
 		border-bottom-right-radius: 30px;
+
+		.brand-logo {
+			width: 100%;
+			height: 15%;
+		}
+		.action-buttons {
+			height: 25%;
+			width: 100%;
+			flex-direction: column;
+			align-items: center;
+			padding: 25px 0;
+			.divider {
+				width: 100%;
+			}
+		}
 	}
 }
 
 // tablet and mobile common styles
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 909px) {
+	// Navbar styles for small screens
+
 	.custom-navbar {
-		height: 120px;
+		height: 70px;
 		width: 100vw;
 		border-radius: 0;
 		flex-direction: row;
+
+		.brand-logo {
+			width: 5rem;
+			height: 100%;
+			.logo {
+				height: calc(min(43px, 40%));
+				width: calc(min(45px, 40%));
+			}
+		}
+		.action-buttons {
+			width: 200px;
+			height: 100%;
+			align-items: center;
+			padding-left: 30px;
+			padding-right: 30px;
+			flex-shrink: 1;
+			.switch-theme img {
+				height: 25px;
+				width: 25px;
+			}
+			.avatar-image img {
+				height: 35px;
+				width: 35px;
+			}
+			.divider {
+				min-height: 100%;
+				min-width: 1px;
+			}
+		}
+	}
+}
+
+// Mobile only styles
+
+@media screen and (max-width: 450px) {
+	.custom-navbar {
+		.action-buttons {
+			width: 150px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
 	}
 }

@@ -18,7 +18,7 @@ const Navbar = () => {
 					<Image
 						src={mode === 'light' ? darkIcon : lightIcon}
 						alt='theme-icon'
-						height={30}
+						height={22}
 						onClick={switchTheme}
 					/>
 				</div>

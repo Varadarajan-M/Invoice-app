@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { getTheme, setTheme as setLocalTheme } from '../utils';
+import { getTheme, setTheme as setLocalTheme } from './helper';
 
 const themes = {
 	lightMode: {

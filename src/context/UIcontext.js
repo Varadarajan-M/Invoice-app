@@ -5,10 +5,12 @@ const themes = {
 	lightMode: {
 		body: { background: 'rgb(248, 248, 251)' },
 		navbar: { background: 'rgb(55, 59, 83)' },
+		bwText: { color: 'rgb(12, 14, 22)' },
 	},
 	darkMode: {
 		body: { background: 'rgb(20, 22, 37)' },
 		navbar: { background: 'rgb(30, 33, 57)' },
+		bwText: { color: 'rgb(255,255,255)' },
 	},
 };
 

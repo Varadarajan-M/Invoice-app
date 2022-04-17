@@ -1,4 +1,4 @@
-import "./App.scss";
+import './_App.scss';
 import Navbar from "./navbar/Navbar";
 import Dummypage from "./pages/Dummypage";
 

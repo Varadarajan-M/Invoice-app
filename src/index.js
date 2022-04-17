@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { UIContextProvider } from './context/UIcontext';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { InvoiceContextProvider } from './context/InvoiceContext';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { UIContextProvider } from "./context/UIcontext";
+import { InvoiceContextProvider } from "./context/InvoiceContext";
+import { BrowserRouter } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<UIContextProvider>
-			<InvoiceContextProvider>
-				<App />
-			</InvoiceContextProvider>
-		</UIContextProvider>
-	</React.StrictMode>,
-	document.getElementById('root'),
+  <BrowserRouter>
+    <React.StrictMode>
+      <UIContextProvider>
+        <InvoiceContextProvider>
+          <App />
+        </InvoiceContextProvider>
+      </UIContextProvider>
+    </React.StrictMode>
+  </BrowserRouter>,
+  document.getElementById("root")
 );

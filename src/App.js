@@ -1,5 +1,5 @@
 import './App.scss';
-import Navbar from './components/Navbar';
+import Navbar from './navbar/Navbar';
 import { useEffect } from 'react';
 import { useTheme } from './context/UIcontext';
 

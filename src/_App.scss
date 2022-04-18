@@ -7,6 +7,7 @@ $spartan: 'League Spartan', sans-serif;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -18,8 +19,9 @@ Button {
 	font-family: $spartan !important;
 }
 .custom-button {
-	width: 8rem;
-	padding: 0.5rem 1rem 0.5rem 0.5rem;
+	width: auto;
+	overflow: hidden;
+	padding: 0.8rem 0.5rem 0.8rem 0.5rem;
 	margin: 0 10px;
 	border: none;
 	outline: none;
@@ -28,8 +30,23 @@ Button {
 }
 
 .common-wrapper {
-	padding-top: 4rem;
-	width: 100%;
+	padding-top: 6rem;
+	margin: 0 auto;
+	transition: background 0.4s ease 0s;
 	height: 100vh;
-	transition: background 0.3s ease 0s;
+}
+
+@media screen and (min-width: 900px) {
+	.common-wrapper {
+		max-width: 65%;
+		margin-left: 21.5%;
+		// background-color: aqua;
+	}
+}
+
+@media screen and (max-width: 899px) {
+	.common-wrapper {
+		max-width: 100vw;
+		padding: 6rem 0.8rem;
+	}
 }

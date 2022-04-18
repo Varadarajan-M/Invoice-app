@@ -1,17 +1,5 @@
-$lightblue: rgb(124, 93, 250);
-$lightblueTransparent: rgb(146, 119, 255);
-
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-body {
-	transition: 0.2s ease-in;
-}
-
 // Navbar styles
+@import '../App';
 
 .custom-navbar {
 	position: fixed;

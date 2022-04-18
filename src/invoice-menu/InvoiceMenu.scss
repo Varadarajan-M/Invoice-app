@@ -1,0 +1,77 @@
+// invoice menu styles
+@import '../App';
+
+$btnBlue: rgb(124, 93, 250);
+.invoice-menu-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+	.invoices-heading {
+		font-weight: bold;
+	}
+	.invoice-count {
+		letter-spacing: 0.25px !important;
+	}
+	.invoice-action-buttons {
+		.filter-btn,
+		.add-new {
+			font-weight: 600;
+			font-size: 17px;
+			padding-right: 20px;
+
+			&:last-child {
+				letter-spacing: 1px;
+			}
+		}
+		.filter {
+			letter-spacing: -0.25px;
+		}
+		.add-new {
+			background: $btnBlue;
+			display: flex;
+			align-items: baseline;
+			justify-content: center;
+		}
+		.up {
+			transform: rotate(-180deg);
+			transition: 0.2s cubic-bezier(0.81, -0.29, 0, 1.21);
+		}
+		.down {
+			transform: rotate(0deg);
+			transition: 0.2s cubic-bezier(0.81, -0.29, 0, 1.21);
+		}
+	}
+}
+.MuiMenu-paper {
+	background-color: lightblue;
+}
+
+@media screen and (min-width: 900px) {
+	.invoice-menu-wrapper {
+		.invoices-heading {
+			letter-spacing: 0;
+			line-height: 35px;
+			font-size: 32px;
+		}
+
+		.invoice-action-buttons {
+			.filter::after {
+				content: ' by status';
+			}
+			.add-new::after {
+				content: 'Invoice';
+				margin-left: 4px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 899px) {
+	.invoice-menu-wrapper {
+		padding: 0 20px;
+		.invoices-heading {
+			font-size: 30px;
+		}
+	}
+}

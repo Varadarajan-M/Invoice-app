@@ -5,6 +5,7 @@ import darkIcon from '../assets/images/icon-moon.svg';
 import avatar from '../assets/images/github-pro.jpg';
 import logo from '../assets/images/logo.svg';
 import { useTheme } from '../context/UIcontext';
+import './Navbar.scss';
 const Navbar = () => {
 	const { mode, theme, switchTheme } = useTheme();
 	return (

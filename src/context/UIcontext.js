@@ -8,6 +8,7 @@ const themes = {
 		bwText: { color: 'rgb(12, 14, 22)' },
 		greyWhiteText: { color: 'rgb(136 ,142, 176)' },
 		menu: { background: 'rgb(255,255,255)' },
+		invoiceCard: { background: 'rgb(255,255,255)' },
 	},
 	darkMode: {
 		body: { background: 'rgb(20, 22, 37)' },
@@ -15,6 +16,7 @@ const themes = {
 		bwText: { color: 'rgb(255,255,255)' },
 		greyWhiteText: { color: 'rgb(255,255,255)' },
 		menu: { background: 'rgb(37, 41, 69)' },
+		invoiceCard: { background: 'rgb(30, 33, 57)' },
 	},
 };
 

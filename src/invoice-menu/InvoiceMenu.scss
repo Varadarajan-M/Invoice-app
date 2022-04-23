@@ -2,18 +2,23 @@
 @import '../App';
 
 $btnBlue: rgb(124, 93, 250);
+
 .invoice-menu-wrapper {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 2rem;
+
 	.invoices-heading {
 		font-weight: bold;
 	}
+
 	.invoice-count {
 		letter-spacing: 0.25px !important;
 	}
+
 	.invoice-action-buttons {
+
 		.filter-btn,
 		.add-new {
 			font-weight: 600;
@@ -24,25 +29,30 @@ $btnBlue: rgb(124, 93, 250);
 				letter-spacing: 1px;
 			}
 		}
+
 		.filter {
 			letter-spacing: -0.25px;
 		}
+
 		.add-new {
 			background: $btnBlue;
 			display: flex;
 			align-items: baseline;
 			justify-content: center;
 		}
+
 		.up {
 			transform: rotate(-180deg);
 			transition: 0.2s cubic-bezier(0.81, -0.29, 0, 1.21);
 		}
+
 		.down {
 			transform: rotate(0deg);
 			transition: 0.2s cubic-bezier(0.81, -0.29, 0, 1.21);
 		}
 	}
 }
+
 .MuiMenu-paper {
 	background-color: lightblue;
 }
@@ -59,6 +69,7 @@ $btnBlue: rgb(124, 93, 250);
 			.filter::after {
 				content: ' by status';
 			}
+
 			.add-new::after {
 				content: 'Invoice';
 				margin-left: 4px;
@@ -70,8 +81,26 @@ $btnBlue: rgb(124, 93, 250);
 @media screen and (max-width: 899px) {
 	.invoice-menu-wrapper {
 		padding: 0 20px;
+
 		.invoices-heading {
 			font-size: 30px;
 		}
+	}
+}
+
+@media (max-width: 393px) {
+	.invoice-menu-wrapper {
+		padding: 0 1px;
+		gap: 3px;
+		padding-left: 10px;
+
+		.invoice-count {
+			font-size: 17px;
+		}
+	}
+}
+@media (max-width: 337px) {
+	.invoice-menu-wrapper{
+		padding-left: 1px;
 	}
 }

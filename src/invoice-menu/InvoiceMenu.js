@@ -99,7 +99,7 @@ const InvoiceMenu = () => {
 				{/* Add New Invoice Button	 */}
 				<Button style={{ color: 'white' }} className='add-new mt-2'>
 					<span
-						className='me-2'
+						className='me-2 innercircle'
 						style={{
 							background: 'white',
 							borderRadius: '60%',

@@ -104,3 +104,14 @@ $btnBlue: rgb(124, 93, 250);
 		padding-left: 1px;
 	}
 }
+
+//TODO : to be revisited for <314px
+@media (max-width: 327px) {
+	.add-new {
+		padding-right: 11px !important;
+
+		.innercircle {
+			margin-left: 2px !important;
+		}
+	}
+}

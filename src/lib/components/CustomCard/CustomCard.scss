@@ -1,0 +1,83 @@
+@import '../../../App';
+
+@mixin bigScreenPadding() {
+	padding: 30px 55px;
+}
+@mixin mediumScreenPadding() {
+	padding: 30px;
+}
+@mixin smallScreenPadding() {
+	padding: 30px 26px;
+}
+.custom-card {
+	display: flex;
+	justify-content: flex-start !important;
+	flex-direction: column;
+	font-family: $spartan;
+	.MuiDialog-container {
+		display: flex;
+		justify-content: flex-start !important;
+		min-width: 100vw;
+		.MuiPaper-root {
+			margin: 0;
+			position: fixed;
+			left: 70px;
+			width: 48rem;
+			min-height: 100%;
+			box-shadow: none;
+		}
+	}
+
+	.custom-card-title {
+		display: flex;
+		justify-content: flex-start;
+		align-items: baseline;
+		@include bigScreenPadding();
+		span {
+			font-size: calc(min(7vw, 30px));
+			font-weight: 600;
+			letter-spacing: 0.45px;
+			font-family: $spartan;
+			line-height: 23px;
+			margin: 10px 0;
+			transition: color 0.2s ease-in;
+		}
+	}
+
+	.custom-card-buttons {
+		position: fixed;
+		bottom: 10px;
+		@include bigScreenPadding();
+	}
+}
+
+@media (max-width: 909px) {
+	.custom-card {
+		.custom-card-title {
+			@include mediumScreenPadding();
+		}
+		.MuiDialog-container {
+			.MuiPaper-root {
+				left: 0;
+				min-height: 92%;
+			}
+		}
+		.custom-card-buttons {
+			@include mediumScreenPadding();
+		}
+	}
+}
+@media (max-width: 560px) {
+	.custom-card {
+		.custom-card-title {
+			// padding: 4% 4% !important;
+			@include smallScreenPadding();
+		}
+		.MuiDialog-container {
+			.MuiPaper-root {
+				width: 100%;
+				border-radius: 0;
+			}
+		}
+	}
+}

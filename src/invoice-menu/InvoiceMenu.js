@@ -25,7 +25,8 @@ const filterOptions = [
 	},
 ];
 
-const InvoiceMenu = () => {
+const InvoiceMenu = (props) => {
+	const { onAddNew } = props;
 	const { theme } = useTheme();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = useMemo(() => Boolean(anchorEl), [anchorEl]);
@@ -97,7 +98,11 @@ const InvoiceMenu = () => {
 				</MenuComponent>
 
 				{/* Add New Invoice Button	 */}
-				<Button style={{ color: 'white' }} className='add-new mt-2'>
+				<Button
+					onClick={onAddNew}
+					style={{ color: 'white' }}
+					className='add-new mt-2'
+				>
 					<span
 						className='me-2 innercircle'
 						style={{

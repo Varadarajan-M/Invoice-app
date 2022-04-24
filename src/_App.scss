@@ -57,12 +57,15 @@ Button {
 	height: 100vh;
 }
 
+// mui overrides
+
 @media screen and (min-width: 900px) {
 	.common-wrapper {
 		max-width: 65%;
 		margin-left: 21.5%;
 		// background-color: aqua;
 	}
+	
 }
 
 @media screen and (max-width: 899px) {

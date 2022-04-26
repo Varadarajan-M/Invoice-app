@@ -6,19 +6,24 @@ import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '../context/UIcontext';
 import Text from '../lib/components/Text';
-import Button from '../lib/components/Button';
+import Button from '@mui/material/Button';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='right' ref={ref} {...props} />;
 });
 
 const InvoiceForm = (props) => {
-	const { theme } = useTheme();
-	const { onBackDropClick, open, className, title } = props;
+	const { theme, mode } = useTheme();
+	const { onBackDropClick, open, className, formMode } = props;
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
 		[className],
 	);
+	const title = useMemo(
+		() => (formMode === 'create' ? 'Create Invoice' : 'Edit Invoice'),
+		[formMode],
+	);
+
 	return (
 		<div>
 			<Dialog
@@ -33,6 +38,7 @@ const InvoiceForm = (props) => {
 						borderTopRightRadius: '25px',
 						borderBottomRightRadius: '25px',
 						maxWidth: '100vw',
+						transition: 'background 0.2s ease-in-out',
 						...theme.body,
 					},
 				}}
@@ -44,15 +50,38 @@ const InvoiceForm = (props) => {
 					<Text>{title}</Text>
 				</DialogTitle>
 
-				<div className='invoice-form-children'>Form here</div>
+				{/* <div className='invoice-form-children'>Form here</div> */}
 
 				<div className='invoice-form-buttons'>
 					<Button
+						className={`start ${mode}`}
 						onClick={onBackDropClick}
-						style={{ width: '100px' }}
+						style={{
+							...theme.invoiceForm.buttons.discard,
+						}}
 					>
 						{' '}
 						Close
+					</Button>
+
+					<Button
+						className={`mid ${mode}`}
+						onClick={onBackDropClick}
+						style={{
+							...theme.invoiceForm.buttons.draft,
+						}}
+					>
+						{' '}
+						Save as Draft
+					</Button>
+
+					<Button
+						className={`end ${mode}`}
+						onClick={onBackDropClick}
+						style={{ ...theme.invoiceForm.buttons.save }}
+					>
+						{' '}
+						Save and Send
 					</Button>
 				</div>
 			</Dialog>

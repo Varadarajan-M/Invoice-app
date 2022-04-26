@@ -9,6 +9,22 @@ const themes = {
 		greyWhiteText: { color: 'rgb(136 ,142, 176)' },
 		menu: { background: 'rgb(255,255,255)' },
 		invoiceCard: { background: 'rgb(255,255,255)' },
+		invoiceForm: {
+			buttons: {
+				discard: {
+					background: 'rgb(249, 250, 254)',
+					color: 'rgb(126, 136, 195)',
+				},
+				draft: {
+					background: 'rgb(54, 59, 83)',
+					color: 'rgb(136, 142, 176)',
+				},
+				save: {
+					background: 'rgb(124, 93, 250)',
+					color: '#fff',
+				},
+			},
+		},
 	},
 	darkMode: {
 		body: { background: 'rgb(20, 22, 37)' },
@@ -17,6 +33,22 @@ const themes = {
 		greyWhiteText: { color: 'rgb(255,255,255)' },
 		menu: { background: 'rgb(37, 41, 69)' },
 		invoiceCard: { background: 'rgb(30, 33, 57)' },
+		invoiceForm: {
+			buttons: {
+				discard: {
+					background: 'rgb(37, 41, 69)',
+					color: 'rgb(223, 227, 250)',
+				},
+				draft: {
+					background: 'rgb(54, 59, 83)',
+					color: 'rgb(223, 227, 250)',
+				},
+				save: {
+					background: 'rgb(124, 93, 250)',
+					color: '#fff',
+				},
+			},
+		},
 	},
 };
 

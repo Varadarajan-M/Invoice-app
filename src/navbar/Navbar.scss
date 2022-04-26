@@ -45,7 +45,7 @@
 }
 
 // large screens
-@media screen and (min-width: 910px) {
+@media screen and (min-width: 909px) {
 	// Navbar styles for large screens
 
 	.custom-navbar {
@@ -111,6 +111,10 @@
 				min-width: 1px;
 			}
 		}
+	}
+
+	.MuiDialog-root {
+		top: 71px !important;
 	}
 }
 

@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from 'react';
+
 import { Invoices } from '../invoices/Invoices';
-import CustomCard from '../lib/components/CustomCard/CustomCard';
+import InvoiceForm from './../invoice-form/InvoiceForm';
 import InvoiceMenu from './../invoice-menu/InvoiceMenu';
+
 const InvoicesHome = () => {
 	const [formOpen, setFormOpen] = useState(false);
 	const onAddNew = useCallback(() => {
@@ -15,14 +17,11 @@ const InvoicesHome = () => {
 			<InvoiceMenu onAddNew={onAddNew} />
 
 			<Invoices />
-			<CustomCard
+			<InvoiceForm
 				open={formOpen}
 				onBackDropClick={onBackDropClick}
 				title='Create Invoice'
-			>
-
-				
-			</CustomCard>
+			/>
 		</div>
 	);
 };

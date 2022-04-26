@@ -1,4 +1,4 @@
-@import '../../../App';
+@import '../App';
 
 @mixin bigScreenPadding() {
 	padding: 30px 55px;
@@ -9,7 +9,7 @@
 @mixin smallScreenPadding() {
 	padding: 30px 26px;
 }
-.custom-card {
+.invoice-form {
 	display: flex;
 	justify-content: flex-start !important;
 	flex-direction: column;
@@ -28,7 +28,7 @@
 		}
 	}
 
-	.custom-card-title {
+	.invoice-form-title {
 		display: flex;
 		justify-content: flex-start;
 		align-items: baseline;
@@ -44,7 +44,7 @@
 		}
 	}
 
-	.custom-card-buttons {
+	.invoice-form-buttons {
 		position: fixed;
 		bottom: 10px;
 		@include bigScreenPadding();
@@ -52,8 +52,8 @@
 }
 
 @media (max-width: 909px) {
-	.custom-card {
-		.custom-card-title {
+	.invoice-form {
+		.invoice-form-title {
 			@include mediumScreenPadding();
 		}
 		.MuiDialog-container {
@@ -62,14 +62,14 @@
 				min-height: 92%;
 			}
 		}
-		.custom-card-buttons {
+		.invoice-form-buttons {
 			@include mediumScreenPadding();
 		}
 	}
 }
 @media (max-width: 560px) {
-	.custom-card {
-		.custom-card-title {
+	.invoice-form {
+		.invoice-form-title {
 			// padding: 4% 4% !important;
 			@include smallScreenPadding();
 		}

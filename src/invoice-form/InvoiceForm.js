@@ -1,23 +1,22 @@
 import React from 'react';
-import './CustomCard.scss';
+import './InvoiceForm.scss';
 import { useMemo } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useTheme } from '../../../context/UIcontext';
-import Text from './../Text';
-import Button from './../Button';
+import { useTheme } from '../context/UIcontext';
+import Text from '../lib/components/Text';
+import Button from '../lib/components/Button';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='right' ref={ref} {...props} />;
 });
 
-// TODO : Add appropriate props and make it reusable
-const CustomCard = (props) => {
+const InvoiceForm = (props) => {
 	const { theme } = useTheme();
-	const { children, onBackDropClick, open, className, title } = props;
+	const { onBackDropClick, open, className, title } = props;
 	const classes = useMemo(
-		() => `custom-card ${className ?? ''}`,
+		() => `invoice-form ${className ?? ''}`,
 		[className],
 	);
 	return (
@@ -39,15 +38,15 @@ const CustomCard = (props) => {
 				}}
 			>
 				<DialogTitle
-					className='custom-card-title'
+					className='invoice-form-title'
 					style={{ ...theme.bwText }}
 				>
 					<Text>{title}</Text>
 				</DialogTitle>
 
-				<div className='custom-card-children'>{children}</div>
+				<div className='invoice-form-children'>Form here</div>
 
-				<div className='custom-card-buttons'>
+				<div className='invoice-form-buttons'>
 					<Button
 						onClick={onBackDropClick}
 						style={{ width: '100px' }}
@@ -61,4 +60,4 @@ const CustomCard = (props) => {
 	);
 };
 
-export default CustomCard;
+export default InvoiceForm;

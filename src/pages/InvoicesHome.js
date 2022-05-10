@@ -18,7 +18,7 @@ const InvoicesHome = () => {
 
 			<Invoices />
 			<InvoiceForm
-				formMode={'create'}
+				formMode='create'
 				open={formOpen}
 				onBackDropClick={onBackDropClick}
 			/>

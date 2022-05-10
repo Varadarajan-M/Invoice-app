@@ -1,6 +1,6 @@
 import React from 'react';
 import './InvoiceForm.scss';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -19,9 +19,12 @@ const InvoiceForm = (props) => {
 		() => `invoice-form ${className ?? ''}`,
 		[className],
 	);
+	const isCreateMode = useCallback(() => formMode === 'create', [formMode]);
+	const isEditMode = useCallback(() => formMode !== 'create', [formMode]);
+
 	const title = useMemo(
-		() => (formMode === 'create' ? 'Create Invoice' : 'Edit Invoice'),
-		[formMode],
+		() => (isCreateMode() ? 'Create Invoice' : 'Edit Invoice'),
+		[isCreateMode],
 	);
 
 	return (
@@ -53,26 +56,34 @@ const InvoiceForm = (props) => {
 				{/* <div className='invoice-form-children'>Form here</div> */}
 
 				<div className='invoice-form-buttons'>
-					<Button
-						className={`start ${mode}`}
-						onClick={onBackDropClick}
-						style={{
-							...theme.invoiceForm.buttons.discard,
-						}}
-					>
-						{' '}
-						Close
-					</Button>
+					{
+						<Button
+							className={`start ${mode} ${
+								isEditMode() ? 'editMode' : ''
+							}`}
+							onClick={onBackDropClick}
+							style={{
+								...theme.invoiceForm.buttons.discard,
+								visibility: isCreateMode()
+									? 'visible'
+									: 'hidden',
+							}}
+						>
+							{' '}
+							Discard
+						</Button>
+					}
 
 					<Button
 						className={`mid ${mode}`}
 						onClick={onBackDropClick}
 						style={{
-							...theme.invoiceForm.buttons.draft,
+							...(isCreateMode()
+								? theme.invoiceForm.buttons.draft
+								: theme.invoiceForm.buttons.discard),
 						}}
 					>
-						{' '}
-						Save as Draft
+						{isCreateMode() ? 'Save as Draft' : 'Cancel'}
 					</Button>
 
 					<Button
@@ -81,7 +92,7 @@ const InvoiceForm = (props) => {
 						style={{ ...theme.invoiceForm.buttons.save }}
 					>
 						{' '}
-						Save and Send
+						{isCreateMode() ? 'Save & Send' : 'Save Changes'}
 					</Button>
 				</div>
 			</Dialog>

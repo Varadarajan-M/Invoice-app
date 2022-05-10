@@ -18,6 +18,7 @@
 		display: flex;
 		justify-content: flex-start !important;
 		min-width: 100vw;
+		height: 100vh !important;
 		.MuiPaper-root {
 			margin: 0;
 			position: fixed;
@@ -133,7 +134,11 @@
 		.invoice-form-buttons {
 			button {
 				min-width: 4.5rem;
-				padding: 0.5rem !important;
+				padding: 0.9rem 1rem !important;
+				font-size: 0.9rem;
+			}
+			button.editMode {
+				display: none;
 			}
 		}
 	}

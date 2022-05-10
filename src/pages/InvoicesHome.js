@@ -18,9 +18,9 @@ const InvoicesHome = () => {
 
 			<Invoices />
 			<InvoiceForm
+				formMode='create'
 				open={formOpen}
 				onBackDropClick={onBackDropClick}
-				title='Create Invoice'
 			/>
 		</div>
 	);

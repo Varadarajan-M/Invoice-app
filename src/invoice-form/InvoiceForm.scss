@@ -18,6 +18,7 @@
 		display: flex;
 		justify-content: flex-start !important;
 		min-width: 100vw;
+		height: 100vh !important;
 		.MuiPaper-root {
 			margin: 0;
 			position: fixed;
@@ -45,9 +46,51 @@
 	}
 
 	.invoice-form-buttons {
-		position: fixed;
+		width: 100%;
+		position: absolute;
 		bottom: 10px;
 		@include bigScreenPadding();
+
+		display: flex;
+		justify-content: space-between;
+		button {
+			text-transform: none;
+			border-radius: 25px;
+			// padding: calc(min(3vw, 15px)) calc(min(4vw, 30px));
+			padding: 1rem 1.5rem;
+			text-align: center;
+			font-weight: 700;
+			line-height: 0.95rem;
+			letter-spacing: 0.2px;
+			// font-size: calc(min(4.5vw, 1rem));
+			// font-size: 0.75rem;
+			&:nth-of-type(1) {
+				margin-right: 1rem;
+			}
+
+			&:nth-of-type(2) {
+				margin-left: auto;
+				margin-right: 1rem;
+			}
+		}
+
+		.start.light:hover {
+			background: rgb(223, 227, 250) !important;
+		}
+		.start.dark:hover {
+			background: #fff !important;
+			// color: black !important;
+		}
+
+		.mid.light:hover {
+			background: rgb(12, 14, 22) !important;
+		}
+		.mid.dark:hover {
+			background: rgb(30, 33, 57) !important;
+		}
+		.end:hover {
+			background: rgb(146, 119, 255) !important;
+		}
 	}
 }
 
@@ -67,16 +110,35 @@
 		}
 	}
 }
+@media screen and (max-width: 909px) and (min-height: 910px) {
+	.invoice-form {
+		.MuiDialog-container {
+			.MuiPaper-root {
+				left: 0;
+				min-height: 95%;
+			}
+		}
+	}
+}
 @media (max-width: 560px) {
 	.invoice-form {
 		.invoice-form-title {
-			// padding: 4% 4% !important;
 			@include smallScreenPadding();
 		}
 		.MuiDialog-container {
 			.MuiPaper-root {
 				width: 100%;
 				border-radius: 0;
+			}
+		}
+		.invoice-form-buttons {
+			button {
+				min-width: 4.5rem;
+				padding: 0.9rem 1rem !important;
+				font-size: 0.9rem;
+			}
+			button.editMode {
+				display: none;
 			}
 		}
 	}

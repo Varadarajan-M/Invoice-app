@@ -1,24 +1,32 @@
 import React from 'react';
 import './InvoiceForm.scss';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '../context/UIcontext';
 import Text from '../lib/components/Text';
-import Button from '../lib/components/Button';
+import Button from '@mui/material/Button';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='right' ref={ref} {...props} />;
 });
 
 const InvoiceForm = (props) => {
-	const { theme } = useTheme();
-	const { onBackDropClick, open, className, title } = props;
+	const { theme, mode } = useTheme();
+	const { onBackDropClick, open, className, formMode } = props;
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
 		[className],
 	);
+	const isCreateMode = useCallback(() => formMode === 'create', [formMode]);
+	const isEditMode = useCallback(() => formMode !== 'create', [formMode]);
+
+	const title = useMemo(
+		() => (isCreateMode() ? 'Create Invoice' : 'Edit Invoice'),
+		[isCreateMode],
+	);
+
 	return (
 		<div>
 			<Dialog
@@ -33,6 +41,7 @@ const InvoiceForm = (props) => {
 						borderTopRightRadius: '25px',
 						borderBottomRightRadius: '25px',
 						maxWidth: '100vw',
+						transition: 'background 0.2s ease-in-out',
 						...theme.body,
 					},
 				}}
@@ -44,15 +53,46 @@ const InvoiceForm = (props) => {
 					<Text>{title}</Text>
 				</DialogTitle>
 
-				<div className='invoice-form-children'>Form here</div>
+				{/* <div className='invoice-form-children'>Form here</div> */}
 
 				<div className='invoice-form-buttons'>
+					{
+						<Button
+							className={`start ${mode} ${
+								isEditMode() ? 'editMode' : ''
+							}`}
+							onClick={onBackDropClick}
+							style={{
+								...theme.invoiceForm.buttons.discard,
+								visibility: isCreateMode()
+									? 'visible'
+									: 'hidden',
+							}}
+						>
+							{' '}
+							Discard
+						</Button>
+					}
+
 					<Button
+						className={`mid ${mode}`}
 						onClick={onBackDropClick}
-						style={{ width: '100px' }}
+						style={{
+							...(isCreateMode()
+								? theme.invoiceForm.buttons.draft
+								: theme.invoiceForm.buttons.discard),
+						}}
+					>
+						{isCreateMode() ? 'Save as Draft' : 'Cancel'}
+					</Button>
+
+					<Button
+						className={`end ${mode}`}
+						onClick={onBackDropClick}
+						style={{ ...theme.invoiceForm.buttons.save }}
 					>
 						{' '}
-						Close
+						{isCreateMode() ? 'Save & Send' : 'Save Changes'}
 					</Button>
 				</div>
 			</Dialog>

@@ -38,7 +38,7 @@
 	// background-color: black;
 	.invoice-card {
 		display: grid;
-		transition: 0.3s ease-in;
+		transition: 0.2s ease-in;
 		grid-template-columns: 12% 25% 20% 20% 20% min-content;
 		outline: none;
 		border: none;
@@ -50,7 +50,7 @@
 			transform: scale(0.99);
 			// border: 1px solid $lightblue;
 			box-shadow: 0 4px 8px 0 rgba(18, 18, 19, 0.1);
-			transition: transform 0.3s;
+			transition: transform 0.2s;
 		}
 		.invoice-status {
 			display: flex;

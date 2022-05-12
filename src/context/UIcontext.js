@@ -23,6 +23,17 @@ const themes = {
 					background: 'rgb(124, 93, 250)',
 					color: '#fff',
 				},
+
+				addNewItem: {
+					background: 'rgb(249, 250, 254)',
+					color: 'rgb(126, 136, 195)',
+				},
+			},
+			labels: {
+				color: 'rgb(126, 136, 195)',
+			},
+			input: {
+				background: 'black !important',
 			},
 		},
 	},
@@ -47,6 +58,16 @@ const themes = {
 					background: 'rgb(124, 93, 250)',
 					color: '#fff',
 				},
+				addNewItem: {
+					background: 'rgb(37, 41, 69)',
+					color: 'rgb(223, 227, 250)',
+				},
+			},
+			labels: {
+				color: 'rgb(223, 227, 250)',
+			},
+			input: {
+				background: 'black',
 			},
 		},
 	},

@@ -57,6 +57,23 @@ Button {
 	height: 100vh;
 }
 
+.form-control:focus {
+	box-shadow: none !important;
+	outline: none;
+}
+.form-control {
+	transition: background 0.2 ease-in, color 0.2s ease-in !important;
+	font-weight: 700 !important;
+}
+.form-control.dark {
+	background: rgb(30, 33, 57);
+	border: 1px solid rgb(55, 66, 149);
+	color: white !important;
+	&:focus {
+		background: rgb(30, 33, 57);
+	}
+}
+
 // mui overrides
 
 @media screen and (min-width: 900px) {
@@ -65,7 +82,6 @@ Button {
 		margin-left: 21.5%;
 		// background-color: aqua;
 	}
-	
 }
 
 @media screen and (max-width: 899px) {

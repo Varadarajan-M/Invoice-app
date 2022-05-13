@@ -1,9 +1,29 @@
 import React from 'react';
 import { useTheme } from '../context/UIcontext';
+import DateInput from '../lib/components/DateInput';
+import DropdownInput from '../lib/components/DropdownInput';
 import TextInput from '../lib/components/TextInput';
 import Button from './../lib/components/Button';
 import Text from './../lib/components/Text';
 
+const optionList = [
+	{
+		value: 'Net 1 Day',
+		selected: false,
+	},
+	{
+		value: 'Net 7 Days',
+		selected: false,
+	},
+	{
+		value: 'Net 14 Days',
+		selected: false,
+	},
+	{
+		value: 'Net 30 Days',
+		selected: true,
+	},
+];
 function Form() {
 	const { theme } = useTheme();
 	return (
@@ -66,10 +86,13 @@ function Form() {
 			</div>
 			<div className='row mt-4'>
 				<div className='col'>
-					<TextInput label='Invoice Date' id='invoice-date' />
+					<DateInput label='Invoice Date' />
 				</div>
 				<div className='col'>
-					<TextInput label='Payment Terms' id='payment-terms' />
+					<DropdownInput
+						optionList={optionList}
+						label='Payment Terms'
+					/>
 				</div>
 			</div>
 			<div className='row'>

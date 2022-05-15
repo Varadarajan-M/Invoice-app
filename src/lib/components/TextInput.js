@@ -1,18 +1,17 @@
 import React, { Fragment } from 'react';
 import Form from 'react-bootstrap/Form';
+import StyledLabel from './StyledLabel';
 import { useTheme } from '../../context/UIcontext';
 const textStyles = {
 	transition: 'color 0.2s ease-in !important',
 	fontWeight: 700,
 };
 const TextInput = ({ errors, style, label, ...inputProps }) => {
-	const { theme, mode } = useTheme();
+	const { mode } = useTheme();
 	const inputstyles = { ...textStyles, ...style };
 	return (
 		<Fragment>
-			<Form.Label style={{ ...theme.invoiceForm.labels }}>
-				{label}
-			</Form.Label>
+			<StyledLabel label={label} />
 			<Form.Control
 				type='text '
 				{...inputProps}

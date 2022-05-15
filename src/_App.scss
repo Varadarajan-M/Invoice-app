@@ -57,15 +57,18 @@ Button {
 	height: 100vh;
 }
 
-.form-control:focus {
-	box-shadow: none !important;
-	outline: none;
-}
-.form-control {
+.form-control,
+.form-select {
 	transition: background 0.2 ease-in, color 0.2s ease-in !important;
-	font-weight: 700 !important;
+	font-weight: 600 !important;
+	padding-inline: 15px !important;
+	&:focus {
+		box-shadow: none !important;
+		outline: none;
+	}
 }
-.form-control.dark {
+.form-control.dark,
+.form-select.dark {
 	background: rgb(30, 33, 57);
 	border: 1px solid rgb(55, 66, 149);
 	color: white !important;
@@ -74,6 +77,14 @@ Button {
 	}
 }
 
+.form-select.dark,
+.form-select.light,
+.form-select.dark:focus {
+	background-image: url('./assets/images/icon-arrow-down.svg');
+	background-repeat: no-repeat;
+	background-position: right 0.75rem center;
+	background-size: 10px 7px;
+}
 // mui overrides
 
 @media screen and (min-width: 900px) {

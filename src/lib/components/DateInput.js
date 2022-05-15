@@ -9,8 +9,11 @@ const DatePickerCustomInput = React.forwardRef(({ value, onClick }, ref) => {
 	return (
 		<Fragment>
 			<button
-				className={`d-flex  justify-content-between align-items-center  text-start form-control ${mode}`}
-				onClick={onClick}
+				className={`d-flex justify-content-between align-items-center  text-start form-control ${mode}`}
+				onClick={(e) => {
+					e.preventDefault();
+					onClick();
+				}}
 				ref={ref}
 			>
 				<span>{value}</span>
@@ -20,15 +23,15 @@ const DatePickerCustomInput = React.forwardRef(({ value, onClick }, ref) => {
 	);
 });
 
-const DateInput = ({ initialDate, label, ...datePickerProps }) => {
-	const [startDate, setStartDate] = React.useState(initialDate ?? new Date());
+const DateInput = ({ label, onChange, selected, ...datePickerProps }) => {
 	return (
 		<Fragment>
 			<StyledLabel label={label} />
 			<DatePicker
-				selected={startDate}
-				onChange={(date) => setStartDate(date)}
+				selected={selected}
+				onChange={onChange}
 				customInput={<DatePickerCustomInput />}
+				{...datePickerProps}
 			/>
 		</Fragment>
 	);

@@ -1,7 +1,7 @@
 import { useInvoices } from '../context/InvoiceContext';
 import Card from '@mui/material/Card';
 import arrowRightIcon from '../assets/images/icon-arrow-right.svg';
-import { formatDate } from '../util';
+import { formatDateToString } from '../util';
 import './invoices.scss';
 import { Image } from 'react-bootstrap';
 import { useTheme } from '../context/UIcontext';
@@ -29,7 +29,7 @@ export function Invoices() {
 							className='invoice-due'
 							style={{ ...theme.greyWhiteText }}
 						>
-							<Text>Due {formatDate(data.paymentDue)}</Text>
+							<Text>Due {formatDateToString(data.paymentDue)}</Text>
 						</div>
 						<div
 							className='invoice-client'

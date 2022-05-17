@@ -3,12 +3,14 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '../context/UIcontext';
+import { useInvoices } from '../context/InvoiceContext';
 import Text from '../lib/components/Text';
 import Button from '@mui/material/Button';
 import FormContent from './FormContent';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import './InvoiceForm.scss';
+import { formatInvoiceData } from './helper';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='right' ref={ref} {...props} />;
@@ -16,6 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const InvoiceForm = (props) => {
 	const { theme, mode } = useTheme();
+	const { invoiceids } = useInvoices();
 	const { onBackDropClick, open, className, formMode } = props;
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
@@ -59,7 +62,8 @@ const InvoiceForm = (props) => {
 			<Form
 				className='exp-form'
 				onSubmit={handleSubmit(
-					(d) => console.log('data', d),
+					(d) =>
+						console.log('data', formatInvoiceData(d, invoiceids)),
 					(e) => console.log('errors', e),
 				)}
 			>

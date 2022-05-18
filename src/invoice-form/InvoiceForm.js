@@ -8,7 +8,7 @@ import Text from '../lib/components/Text';
 import Button from '@mui/material/Button';
 import FormContent from './FormContent';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import './InvoiceForm.scss';
 import { formatInvoiceData } from './helper';
 
@@ -37,9 +37,31 @@ const InvoiceForm = (props) => {
 		formState: { errors },
 		handleSubmit,
 		control,
+		getValues,
+		setValue,
 	} = useForm({
 		mode: 'all',
-		defaultValues: {},
+		defaultValues: {
+			items: [
+				{
+					name: 'abc',
+					quantity: 1,
+					price: 2,
+					total: 2,
+				},
+				{
+					name: 'abc',
+					quantity: 1,
+					price: 2,
+					total: 2,
+				},
+			],
+		},
+	});
+
+	const { fields, append, remove } = useFieldArray({
+		control,
+		name: 'items',
 	});
 
 	return (
@@ -84,6 +106,11 @@ const InvoiceForm = (props) => {
 						control={control}
 						register={register}
 						errors={errors}
+						fields={fields}
+						append={append}
+						remove={remove}
+						getValues={getValues}
+						setValue={setValue}
 					/>
 				</main>
 

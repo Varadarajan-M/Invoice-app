@@ -7,6 +7,10 @@ import Button from './../lib/components/Button';
 import Text from './../lib/components/Text';
 import { Controller } from 'react-hook-form';
 import { EMAIL_REGEX } from './helper';
+import StyledLabel from './../lib/components/StyledLabel';
+import deleteIcon from '../assets/images/icon-delete.svg';
+import Image from 'react-bootstrap/Image';
+
 const optionList = [
 	{
 		value: 'Net 1 Day',
@@ -28,9 +32,17 @@ const optionList = [
 
 const defaultOption = optionList.filter((option) => option.selected)[0];
 
-function Form({ register, errors, control }) {
+function Form({
+	register,
+	errors,
+	control,
+	fields,
+	append,
+	remove,
+	getValues,
+	setValue,
+}) {
 	const { theme } = useTheme();
-
 	return (
 		<div className='content-form'>
 			<Text className='text-primary fw-bold'>Bill From</Text>
@@ -223,10 +235,80 @@ function Form({ register, errors, control }) {
 				</div>
 			</div>
 			<div className='row'>
+				<div className='col mt-4'>
+					<Text
+						className='text-secondary fw-bold'
+						style={{ fontSize: '1.30rem' }}
+					>
+						ItemList
+					</Text>
+				</div>
+			</div>
+			{/* Dynamic Form */}
+
+			{fields.map((field, index) => {
+				return (
+					<div className='row' key={field.id}>
+						<div className='col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
+							<StyledLabel label='Item Name' />
+							<TextInput
+								// label='Item Name'
+								{...register(`items.${index}.name`)}
+							/>
+						</div>
+						<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
+							<StyledLabel label='Qty' />
+
+							<TextInput
+								// label='Qty'
+								type='number'
+								{...register(`items.${index}.quantity`)}
+							/>
+						</div>
+
+						<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
+							<StyledLabel label='Price' />
+
+							<TextInput
+								// label='Price'
+								type='number'
+								{...register(`items.${index}.price`)}
+							/>
+						</div>
+						<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
+							<StyledLabel label='Total' />
+							<br />
+							<StyledLabel className='mt-2' label={field.total} />
+						</div>
+						<div className='col-sm-1 col-lg-1 col-md-1 col mt-2'>
+							<StyledLabel label='' />
+							<br />
+							<Image
+								onClick={() => remove(index)}
+								className='mt-3'
+								src={deleteIcon}
+							></Image>
+						</div>
+					</div>
+				);
+			})}
+
+			{/* Dynamic form end */}
+
+			<div className='row'>
 				<div className='col-12 mt-4'>
 					<Button
+						type='button'
 						className='w-100 m-0'
 						style={{ ...theme.invoiceForm.buttons.addNewItem }}
+						onClick={() =>
+							append({
+								name: '',
+								quantity: 0,
+								price: 0,
+								total: 0,
+							})
+						}
 					>
 						+ Add New Item
 					</Button>

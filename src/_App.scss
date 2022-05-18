@@ -101,3 +101,10 @@ Button {
 		padding: 6rem 0.8rem;
 	}
 }
+
+@media screen and (max-width: 400px) {
+	.form-control,
+	.form-select {
+		padding-inline: 9px !important;
+	}
+}

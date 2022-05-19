@@ -44,16 +44,10 @@ const InvoiceForm = (props) => {
 		defaultValues: {
 			items: [
 				{
-					name: 'abc',
-					quantity: 1,
-					price: 2,
-					total: 2,
-				},
-				{
-					name: 'abc',
-					quantity: 1,
-					price: 2,
-					total: 2,
+					name: '',
+					quantity: 0,
+					price: 0,
+					total: 0,
 				},
 			],
 		},

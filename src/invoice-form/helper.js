@@ -3,6 +3,14 @@ import { formatDate, generateID, addToDate } from './../util';
 export const EMAIL_REGEX =
 	/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
+const calcInvoiceTotal = (itemList) => {
+	const sum = itemList.reduce(
+		(initSum, currentValue) => initSum + currentValue?.total,
+		0,
+	);
+	return sum;
+};
+
 export const formatInvoiceData = (formData, invoiceids) => {
 	const createdAt = formatDate(formData.invoiceDate, 'yy-mm-dd');
 	const paymentTerms = Number(formData.paymentTerms.split(' ')[1] ?? 30);
@@ -31,5 +39,6 @@ export const formatInvoiceData = (formData, invoiceids) => {
 			country: formData.toCountry ?? '',
 		},
 		items: formData.items ?? [],
+		total: calcInvoiceTotal(formData?.items ?? []),
 	};
 };

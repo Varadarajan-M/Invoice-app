@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useTheme } from '../context/UIcontext';
 import DateInput from '../lib/components/DateInput';
 import DropdownInput from '../lib/components/DropdownInput';
 import TextInput from '../lib/components/TextInput';
 import Button from './../lib/components/Button';
 import Text from './../lib/components/Text';
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import { EMAIL_REGEX } from './helper';
 import StyledLabel from './../lib/components/StyledLabel';
 import deleteIcon from '../assets/images/icon-delete.svg';
@@ -261,6 +261,7 @@ function Form({
 
 							<TextInput
 								// label='Qty'
+								min={0}
 								type='number'
 								{...register(`items.${index}.quantity`)}
 							/>
@@ -272,13 +273,19 @@ function Form({
 							<TextInput
 								// label='Price'
 								type='number'
+								min={0}
 								{...register(`items.${index}.price`)}
 							/>
 						</div>
 						<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
 							<StyledLabel label='Total' />
 							<br />
-							<StyledLabel className='mt-2' label={field.total} />
+							<TotalValue
+								control={control}
+								index={index}
+								setValue={setValue}
+							/>
+							{/* <StyledLabel className='mt-2' label={field.total} /> */}
 						</div>
 						<div className='col-sm-1 col-lg-1 col-md-1 col mt-2'>
 							<StyledLabel label='' />
@@ -316,6 +323,31 @@ function Form({
 			</div>
 		</div>
 	);
+}
+
+function TotalValue({ control, index, setValue }) {
+	const updatedPrice = useWatch({
+		control,
+		name: `items.${index}.price` || '',
+	});
+
+	const updatedQty = useWatch({
+		control,
+		name: `items.${index}.quantity` || '',
+	});
+
+	const updatedTotal = useMemo(
+		() => (+updatedPrice ?? 0) * (+updatedQty ?? 0),
+		[updatedPrice, updatedQty],
+	);
+
+	useEffect(() => {
+		if (updatedTotal >= 0) {
+			setValue(`items.${index}.total`, updatedTotal);
+		}
+	}, [index, setValue, updatedTotal]);
+
+	return <StyledLabel className='mt-2' label={updatedTotal} />;
 }
 
 export default Form;

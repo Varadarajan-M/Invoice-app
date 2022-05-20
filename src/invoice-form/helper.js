@@ -42,3 +42,37 @@ export const formatInvoiceData = (formData, invoiceids) => {
 		total: calcInvoiceTotal(formData?.items ?? []),
 	};
 };
+
+export const OPTION_LIST = [
+	{
+		value: 'Net 1 Day',
+		selected: false,
+	},
+	{
+		value: 'Net 7 Days',
+		selected: true,
+	},
+	{
+		value: 'Net 14 Days',
+		selected: false,
+	},
+	{
+		value: 'Net 30 Days',
+		selected: false,
+	},
+];
+
+export const DEFAULT_OPTION = OPTION_LIST.filter(
+	(option) => option.selected,
+)[0];
+
+export const validateItemErrors = (arr, index, key) => {
+	try {
+		const val = arr?.items[index][key];
+		if (val) {
+			return val;
+		}
+	} catch (e) {
+		return null;
+	}
+};

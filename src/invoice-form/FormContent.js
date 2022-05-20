@@ -6,31 +6,15 @@ import TextInput from '../lib/components/TextInput';
 import Button from './../lib/components/Button';
 import Text from './../lib/components/Text';
 import { Controller, useWatch } from 'react-hook-form';
-import { EMAIL_REGEX } from './helper';
+import {
+	EMAIL_REGEX,
+	DEFAULT_OPTION,
+	OPTION_LIST,
+	validateItemErrors,
+} from './helper';
 import StyledLabel from './../lib/components/StyledLabel';
 import deleteIcon from '../assets/images/icon-delete.svg';
 import Image from 'react-bootstrap/Image';
-
-const optionList = [
-	{
-		value: 'Net 1 Day',
-		selected: false,
-	},
-	{
-		value: 'Net 7 Days',
-		selected: true,
-	},
-	{
-		value: 'Net 14 Days',
-		selected: false,
-	},
-	{
-		value: 'Net 30 Days',
-		selected: false,
-	},
-];
-
-const defaultOption = optionList.filter((option) => option.selected)[0];
 
 function Form({
 	register,
@@ -219,8 +203,8 @@ function Form({
 				<div className='col'>
 					<DropdownInput
 						{...register('paymentTerms')}
-						defaultOption={defaultOption}
-						optionList={optionList}
+						defaultOption={DEFAULT_OPTION}
+						optionList={OPTION_LIST}
 						label='Payment Terms'
 					/>
 				</div>
@@ -246,60 +230,105 @@ function Form({
 			</div>
 			{/* Dynamic Form */}
 
-			{fields.map((field, index) => {
-				return (
-					<div className='row' key={field.id}>
-						<div className='col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
-							<StyledLabel label='Item Name' />
-							<TextInput
-								// label='Item Name'
-								{...register(`items.${index}.name`)}
-							/>
-						</div>
-						<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
-							<StyledLabel label='Qty' />
+			<div className='row d-sm-flex d-none'>
+				<div className=' col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
+					<StyledLabel label='Item Name' />
+				</div>
+				<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
+					<StyledLabel label='Qty' />
+				</div>
 
-							<TextInput
-								// label='Qty'
-								min={0}
-								type='number'
-								{...register(`items.${index}.quantity`)}
-							/>
-						</div>
+				<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
+					<StyledLabel label='Price' />
+				</div>
+				<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
+					<StyledLabel label='Total' />
+				</div>
+			</div>
+			<div className='item-list-wrapper'>
+				{fields.map((field, index) => {
+					return (
+						<div className='row' key={field.id}>
+							<div className='col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Item Name'
+								/>
+								<TextInput
+									{...register(`items.${index}.name`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'name',
+									)}
+								/>
+							</div>
+							<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Qty'
+								/>
 
-						<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
-							<StyledLabel label='Price' />
+								<TextInput
+									min={0}
+									type='number'
+									{...register(`items.${index}.quantity`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'quantity',
+									)}
+								/>
+							</div>
 
-							<TextInput
-								// label='Price'
-								type='number'
-								min={0}
-								{...register(`items.${index}.price`)}
-							/>
-						</div>
-						<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
-							<StyledLabel label='Total' />
-							<br />
-							<TotalValue
-								control={control}
-								index={index}
-								setValue={setValue}
-							/>
-							{/* <StyledLabel className='mt-2' label={field.total} /> */}
-						</div>
-						<div className='col-sm-1 col-lg-1 col-md-1 col mt-2'>
-							<StyledLabel label='' />
-							<br />
-							<Image
-								onClick={() => remove(index)}
-								className='mt-3'
-								src={deleteIcon}
-							></Image>
-						</div>
-					</div>
-				);
-			})}
+							<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Price'
+								/>
 
+								<TextInput
+									type='number'
+									min={0}
+									{...register(`items.${index}.price`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'price',
+									)}
+								/>
+							</div>
+							<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Total'
+								/>
+								<br />
+								<TotalValue
+									control={control}
+									index={index}
+									setValue={setValue}
+								/>
+							</div>
+							<div className='col-sm-1 col-lg-1 col-md-1 col mt-sm-1 mt-2'>
+								<StyledLabel label='' />
+								<br />
+								<Image
+									onClick={() => remove(index)}
+									className='mt-3'
+									src={deleteIcon}
+								/>
+							</div>
+						</div>
+					);
+				})}
+			</div>
 			{/* Dynamic form end */}
 
 			<div className='row'>
@@ -311,8 +340,8 @@ function Form({
 						onClick={() =>
 							append({
 								name: '',
-								quantity: 0,
-								price: 0,
+								quantity: '',
+								price: '',
 								total: 0,
 							})
 						}
@@ -346,7 +375,6 @@ function TotalValue({ control, index, setValue }) {
 			setValue(`items.${index}.total`, updatedTotal);
 		}
 	}, [index, setValue, updatedTotal]);
-
 	return <StyledLabel className='mt-2' label={updatedTotal} />;
 }
 

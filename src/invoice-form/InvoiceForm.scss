@@ -183,3 +183,17 @@
 		}
 	}
 }
+
+// form-content styles
+
+@media (min-width: 576px) {
+	.item-list-wrapper {
+		margin-top: -25px;
+	}
+}
+
+@media (max-width: 575px) {
+	.item-list-wrapper {
+		margin-top: 0;
+	}
+}

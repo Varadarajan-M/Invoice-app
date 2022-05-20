@@ -1,36 +1,32 @@
-import React from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useTheme } from '../context/UIcontext';
 import DateInput from '../lib/components/DateInput';
 import DropdownInput from '../lib/components/DropdownInput';
 import TextInput from '../lib/components/TextInput';
 import Button from './../lib/components/Button';
 import Text from './../lib/components/Text';
-import { Controller } from 'react-hook-form';
-import { EMAIL_REGEX } from './helper';
-const optionList = [
-	{
-		value: 'Net 1 Day',
-		selected: false,
-	},
-	{
-		value: 'Net 7 Days',
-		selected: true,
-	},
-	{
-		value: 'Net 14 Days',
-		selected: false,
-	},
-	{
-		value: 'Net 30 Days',
-		selected: false,
-	},
-];
+import { Controller, useWatch } from 'react-hook-form';
+import {
+	EMAIL_REGEX,
+	DEFAULT_OPTION,
+	OPTION_LIST,
+	validateItemErrors,
+} from './helper';
+import StyledLabel from './../lib/components/StyledLabel';
+import deleteIcon from '../assets/images/icon-delete.svg';
+import Image from 'react-bootstrap/Image';
 
-const defaultOption = optionList.filter((option) => option.selected)[0];
-
-function Form({ register, errors, control }) {
+function Form({
+	register,
+	errors,
+	control,
+	fields,
+	append,
+	remove,
+	getValues,
+	setValue,
+}) {
 	const { theme } = useTheme();
-
 	return (
 		<div className='content-form'>
 			<Text className='text-primary fw-bold'>Bill From</Text>
@@ -207,8 +203,8 @@ function Form({ register, errors, control }) {
 				<div className='col'>
 					<DropdownInput
 						{...register('paymentTerms')}
-						defaultOption={defaultOption}
-						optionList={optionList}
+						defaultOption={DEFAULT_OPTION}
+						optionList={OPTION_LIST}
 						label='Payment Terms'
 					/>
 				</div>
@@ -223,10 +219,132 @@ function Form({ register, errors, control }) {
 				</div>
 			</div>
 			<div className='row'>
+				<div className='col mt-4'>
+					<Text
+						className='text-secondary fw-bold'
+						style={{ fontSize: '1.30rem' }}
+					>
+						ItemList
+					</Text>
+				</div>
+			</div>
+			{/* Dynamic Form */}
+
+			<div className='row d-sm-flex d-none'>
+				<div className=' col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
+					<StyledLabel label='Item Name' />
+				</div>
+				<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
+					<StyledLabel label='Qty' />
+				</div>
+
+				<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
+					<StyledLabel label='Price' />
+				</div>
+				<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
+					<StyledLabel label='Total' />
+				</div>
+			</div>
+			<div className='item-list-wrapper'>
+				{fields.map((field, index) => {
+					return (
+						<div className='row' key={field.id}>
+							<div className='col-sm-4 col-lg-4 col-md-4 col-12 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Item Name'
+								/>
+								<TextInput
+									{...register(`items.${index}.name`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'name',
+									)}
+								/>
+							</div>
+							<div className='col-sm-2  col-lg-2 col-md-2 col-3 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Qty'
+								/>
+
+								<TextInput
+									min={0}
+									type='number'
+									{...register(`items.${index}.quantity`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'quantity',
+									)}
+								/>
+							</div>
+
+							<div className='col-sm-3 col-lg-3 col-md-3 col-4 mt-2 '>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Price'
+								/>
+
+								<TextInput
+									type='number'
+									min={0}
+									{...register(`items.${index}.price`, {
+										required: 'This field is required',
+									})}
+									errors={validateItemErrors(
+										errors ?? [],
+										index,
+										'price',
+									)}
+								/>
+							</div>
+							<div className='col-sm-2 col-lg-2 col-md-2 col-3 mt-2'>
+								<StyledLabel
+									className='d-sm-none d-inline-block'
+									label='Total'
+								/>
+								<br />
+								<TotalValue
+									control={control}
+									index={index}
+									setValue={setValue}
+								/>
+							</div>
+							<div className='col-sm-1 col-lg-1 col-md-1 col mt-sm-1 mt-2'>
+								<StyledLabel label='' />
+								<br />
+								<Image
+									onClick={() => remove(index)}
+									className='mt-3'
+									src={deleteIcon}
+								/>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+			{/* Dynamic form end */}
+
+			<div className='row'>
 				<div className='col-12 mt-4'>
 					<Button
+						type='button'
 						className='w-100 m-0'
 						style={{ ...theme.invoiceForm.buttons.addNewItem }}
+						onClick={() =>
+							append({
+								name: '',
+								quantity: '',
+								price: '',
+								total: 0,
+							})
+						}
 					>
 						+ Add New Item
 					</Button>
@@ -234,6 +352,30 @@ function Form({ register, errors, control }) {
 			</div>
 		</div>
 	);
+}
+
+function TotalValue({ control, index, setValue }) {
+	const updatedPrice = useWatch({
+		control,
+		name: `items.${index}.price` || '',
+	});
+
+	const updatedQty = useWatch({
+		control,
+		name: `items.${index}.quantity` || '',
+	});
+
+	const updatedTotal = useMemo(
+		() => (+updatedPrice ?? 0) * (+updatedQty ?? 0),
+		[updatedPrice, updatedQty],
+	);
+
+	useEffect(() => {
+		if (updatedTotal >= 0) {
+			setValue(`items.${index}.total`, updatedTotal);
+		}
+	}, [index, setValue, updatedTotal]);
+	return <StyledLabel className='mt-2' label={updatedTotal} />;
 }
 
 export default Form;

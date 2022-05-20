@@ -21,6 +21,15 @@ $draftcolordark: rgb(223, 227, 250);
 ::-webkit-scrollbar {
 	display: none;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type='number'] {
+	-moz-appearance: textfield;
+}
 html {
 	scroll-behavior: smooth;
 }
@@ -99,5 +108,12 @@ Button {
 	.common-wrapper {
 		max-width: 100vw;
 		padding: 6rem 0.8rem;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.form-control,
+	.form-select {
+		padding-inline: 9px !important;
 	}
 }

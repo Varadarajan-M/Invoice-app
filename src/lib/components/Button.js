@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Button = React.forwardRef(
-	({ style, children, className, onClick }, ref) => {
+	({ style, children, className, onClick, ...buttonProps }, ref) => {
 		const classes = `${className ?? ''} custom-button`;
 		return (
 			<button
@@ -9,6 +9,7 @@ const Button = React.forwardRef(
 				onClick={onClick}
 				className={classes}
 				style={style}
+				{...buttonProps}
 			>
 				{children}
 			</button>

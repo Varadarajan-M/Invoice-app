@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -18,7 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const InvoiceForm = (props) => {
 	const { theme, mode } = useTheme();
-	const { invoiceids } = useInvoices();
+	const { invoiceids, addInvoice } = useInvoices();
 	const { onBackDropClick, open, className, formMode } = props;
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
@@ -34,11 +34,12 @@ const InvoiceForm = (props) => {
 
 	const {
 		register,
-		formState: { errors },
+		formState: { errors, isSubmitSuccessful },
 		handleSubmit,
 		control,
 		getValues,
 		setValue,
+		reset,
 	} = useForm({
 		mode: 'all',
 		defaultValues: {
@@ -58,6 +59,32 @@ const InvoiceForm = (props) => {
 		name: 'items',
 	});
 
+	const saveAsDraftHandler = () => {
+		const formattedData = formatInvoiceData({
+			...getValues(),
+			status: 'draft',
+		});
+		reset();
+		onBackDropClick();
+		addInvoice(formattedData);
+	};
+
+	const discardHandler = () => {
+		reset();
+		onBackDropClick();
+	};
+
+	const submitHandler = (data) => {
+		addInvoice(formatInvoiceData(data, invoiceids));
+	};
+
+	useEffect(() => {
+		if (isSubmitSuccessful) {
+			reset();
+			onBackDropClick();
+		}
+	}, [isSubmitSuccessful, reset, onBackDropClick]);
+
 	return (
 		<Dialog
 			className={classes}
@@ -75,14 +102,7 @@ const InvoiceForm = (props) => {
 				},
 			}}
 		>
-			<Form
-				className='exp-form'
-				onSubmit={handleSubmit(
-					(d) =>
-						console.log('data', formatInvoiceData(d, invoiceids)),
-					(e) => console.log('errors', e),
-				)}
-			>
+			<Form className='exp-form' onSubmit={handleSubmit(submitHandler)}>
 				<header className='titlepart' style={{ ...theme.body }}>
 					<DialogTitle
 						className='invoice-form-title'
@@ -118,7 +138,7 @@ const InvoiceForm = (props) => {
 							className={`start ${mode} ${
 								isEditMode() ? 'editMode' : ''
 							}`}
-							onClick={onBackDropClick}
+							onClick={discardHandler}
 							style={{
 								...theme.invoiceForm.buttons.discard,
 								visibility: isCreateMode()
@@ -134,7 +154,9 @@ const InvoiceForm = (props) => {
 					<Button
 						type='button'
 						className={`mid ${mode}`}
-						onClick={onBackDropClick}
+						onClick={
+							isCreateMode ? saveAsDraftHandler : onBackDropClick
+						}
 						style={{
 							...(isCreateMode()
 								? theme.invoiceForm.buttons.draft

@@ -5,6 +5,8 @@ const InvoiceContext = createContext({ invoices: [] });
 
 export const InvoiceContextProvider = ({ children }) => {
 	const [invoices, setInvoices] = useState(getInvoiceData);
+	const [activeFilter, setActiveFilter] = useState(null);
+
 	const invoiceids = useMemo(
 		() => invoices.map((invoice) => invoice.id),
 		[invoices],
@@ -12,19 +14,47 @@ export const InvoiceContextProvider = ({ children }) => {
 
 	// add invoice to list
 	const addInvoice = (invoice) => {
-		setInvoices((previousInvoices) => [
-			invoice,
-			...(previousInvoices ?? {}),
-		]);
-		setInvoiceData([invoice, ...invoices]);
+		setInvoiceData([invoice, ...getInvoiceData()]);
+		/*
+		At initial stage active filter will be null.
+		So that the newly added invoice must be rendered
+		into the screen.
+
+		if activeFilter is not null,
+		That means now we are applying some kinda filter.
+
+		So now if we add a new invoice now...
+		the status of that invoice must be equal to active filter
+		for that invoice to be rendered to the screen.
+		
+		Otherwise the value will be stored and rendered only on refresh 
+		or a matching filter change
+		*/
+		if (!activeFilter || invoice.status === activeFilter?.toLowerCase()) {
+			setInvoices((previousInvoices) => [
+				invoice,
+				...(previousInvoices ?? {}),
+			]);
+		}
+	};
+	// filter invoices
+	const filterInvoice = (appliedFilter) => {
+		const invoiceData = getInvoiceData();
+		const filteredInvoices = invoiceData.filter(
+			(invoice) => invoice.status === appliedFilter.toLowerCase(),
+		);
+		setInvoices(filteredInvoices);
 	};
 
 	return (
 		<InvoiceContext.Provider
 			value={{
-				invoices: invoices,
-				invoiceids: invoiceids,
-				addInvoice: addInvoice,
+				invoices,
+				invoiceids,
+				addInvoice,
+				filterInvoice,
+				activeFilter,
+				setActiveFilter,
 			}}
 		>
 			{children}

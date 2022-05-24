@@ -70,6 +70,8 @@
 		.arrow-right {
 			padding: 7px;
 			-webkit-font-smoothing: antialiased;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		.invoice-id {
 			font-weight: 600;
@@ -110,12 +112,12 @@
 	}
 	.invoice-status {
 		grid-row: 3;
-		grid-column: 3/6;
+		grid-column: 5/6;
 		display: flex;
 		justify-self: flex-end;
 	}
 	.invoice-total {
 		grid-row: 3;
-		grid-column: 1;
+		grid-column: 1/4;
 	}
 }

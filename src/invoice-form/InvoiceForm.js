@@ -2,15 +2,15 @@ import React, { useMemo, useCallback, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 import { useTheme } from '../context/UIcontext';
 import { useInvoices } from '../context/InvoiceContext';
 import Text from '../lib/components/Text';
-import Button from '@mui/material/Button';
-import FormContent from './FormContent';
 import Form from 'react-bootstrap/Form';
-import { useForm, useFieldArray } from 'react-hook-form';
-import './InvoiceForm.scss';
+import { useForm } from 'react-hook-form';
+import FormContent from './FormContent';
 import { formatInvoiceData } from './helper';
+import './InvoiceForm.scss';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction='right' ref={ref} {...props} />;
@@ -54,11 +54,6 @@ const InvoiceForm = (props) => {
 		},
 	});
 
-	const { fields, append, remove } = useFieldArray({
-		control,
-		name: 'items',
-	});
-
 	const saveAsDraftHandler = () => {
 		const formattedData = formatInvoiceData({
 			...getValues(),
@@ -74,9 +69,8 @@ const InvoiceForm = (props) => {
 		onBackDropClick();
 	};
 
-	const submitHandler = (data) => {
+	const submitHandler = (data) =>
 		addInvoice(formatInvoiceData(data, invoiceids));
-	};
 
 	useEffect(() => {
 		if (isSubmitSuccessful) {
@@ -120,10 +114,6 @@ const InvoiceForm = (props) => {
 						control={control}
 						register={register}
 						errors={errors}
-						fields={fields}
-						append={append}
-						remove={remove}
-						getValues={getValues}
 						setValue={setValue}
 					/>
 				</main>

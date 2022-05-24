@@ -1,4 +1,5 @@
 @import '../App';
+
 @mixin bigScreenPadding() {
 	padding: 30px 55px;
 }
@@ -16,6 +17,7 @@
 	justify-content: flex-start !important;
 	flex-direction: column;
 	font-family: $spartan;
+
 	.MuiDialog-container {
 		display: flex;
 		justify-content: flex-start !important;
@@ -116,8 +118,16 @@
 			bottom: 0px;
 			z-index: 1;
 		}
+
+		.totalvalue {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+		}
 	}
 }
+
+
 
 @media (max-width: 909px) {
 	.invoice-form {

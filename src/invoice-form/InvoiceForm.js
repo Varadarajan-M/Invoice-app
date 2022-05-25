@@ -7,9 +7,10 @@ import { useTheme } from '../context/UIcontext';
 import { useInvoices } from '../context/InvoiceContext';
 import Text from '../lib/components/Text';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import FormContent from './FormContent';
 import { formatInvoiceData } from './helper';
+import { NEW_ITEM } from './constants';
 import './InvoiceForm.scss';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -32,52 +33,41 @@ const InvoiceForm = (props) => {
 		[isCreateMode],
 	);
 
-	const {
-		register,
-		formState: { errors, isSubmitSuccessful },
-		handleSubmit,
-		control,
-		getValues,
-		setValue,
-		reset,
-	} = useForm({
+	const formData = useForm({
 		mode: 'all',
 		defaultValues: {
-			items: [
-				{
-					name: '',
-					quantity: '',
-					price: '',
-					total: 0,
-				},
-			],
+			items: [NEW_ITEM],
 		},
 	});
 
 	const saveAsDraftHandler = () => {
 		const formattedData = formatInvoiceData({
-			...getValues(),
+			...formData.getValues(),
 			status: 'draft',
 		});
-		reset();
+		formData.reset();
 		onBackDropClick();
 		addInvoice(formattedData);
 	};
 
 	const discardHandler = () => {
-		reset();
+		formData.reset();
 		onBackDropClick();
 	};
 
 	const submitHandler = (data) =>
 		addInvoice(formatInvoiceData(data, invoiceids));
 
+	const {
+		formState: { isSubmitSuccessful },
+		reset,
+	} = formData;
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset();
 			onBackDropClick();
 		}
-	}, [isSubmitSuccessful, reset, onBackDropClick]);
+	}, [isSubmitSuccessful, onBackDropClick, reset]);
 
 	return (
 		<Dialog
@@ -96,76 +86,78 @@ const InvoiceForm = (props) => {
 				},
 			}}
 		>
-			<Form className='exp-form' onSubmit={handleSubmit(submitHandler)}>
-				<header className='titlepart' style={{ ...theme.body }}>
-					<DialogTitle
-						className='invoice-form-title'
-						style={{ ...theme.bwText }}
+			<FormProvider {...formData}>
+				<Form
+					className='exp-form'
+					onSubmit={formData.handleSubmit(submitHandler)}
+				>
+					<header className='titlepart' style={{ ...theme.body }}>
+						<DialogTitle
+							className='invoice-form-title'
+							style={{ ...theme.bwText }}
+						>
+							<Text>{title}</Text>
+						</DialogTitle>
+					</header>
+
+					<main
+						className='invoice-form-children'
+						style={{ ...theme.body }}
 					>
-						<Text>{title}</Text>
-					</DialogTitle>
-				</header>
+						<FormContent />
+					</main>
 
-				<main
-					className='invoice-form-children'
-					style={{ ...theme.body }}
-				>
-					<FormContent
-						control={control}
-						register={register}
-						errors={errors}
-						setValue={setValue}
-					/>
-				</main>
+					<footer
+						className='invoice-form-buttons'
+						style={{ ...theme.body }}
+					>
+						{
+							<Button
+								type='button'
+								className={`start ${mode} ${
+									isEditMode() ? 'editMode' : ''
+								}`}
+								onClick={discardHandler}
+								style={{
+									...theme.invoiceForm.buttons.discard,
+									visibility: isCreateMode()
+										? 'visible'
+										: 'hidden',
+								}}
+							>
+								{' '}
+								Discard
+							</Button>
+						}
 
-				<footer
-					className='invoice-form-buttons'
-					style={{ ...theme.body }}
-				>
-					{
 						<Button
 							type='button'
-							className={`start ${mode} ${
-								isEditMode() ? 'editMode' : ''
-							}`}
-							onClick={discardHandler}
+							className={`mid ${mode}`}
+							onClick={
+								isCreateMode
+									? saveAsDraftHandler
+									: onBackDropClick
+							}
 							style={{
-								...theme.invoiceForm.buttons.discard,
-								visibility: isCreateMode()
-									? 'visible'
-									: 'hidden',
+								...(isCreateMode()
+									? theme.invoiceForm.buttons.draft
+									: theme.invoiceForm.buttons.discard),
 							}}
 						>
-							{' '}
-							Discard
+							{isCreateMode() ? 'Save as Draft' : 'Cancel'}
 						</Button>
-					}
 
-					<Button
-						type='button'
-						className={`mid ${mode}`}
-						onClick={
-							isCreateMode ? saveAsDraftHandler : onBackDropClick
-						}
-						style={{
-							...(isCreateMode()
-								? theme.invoiceForm.buttons.draft
-								: theme.invoiceForm.buttons.discard),
-						}}
-					>
-						{isCreateMode() ? 'Save as Draft' : 'Cancel'}
-					</Button>
-
-					<Button
-						type='submit'
-						className={`end ${mode}`}
-						style={{ ...theme.invoiceForm.buttons.save }}
-					>
-						{' '}
-						{isCreateMode() ? 'Save & Send' : 'Save Changes'}
-					</Button>
-				</footer>
-			</Form>
+						<Button
+							type='submit'
+							className={`end ${mode}`}
+							style={{ ...theme.invoiceForm.buttons.save }}
+						>
+							{' '}
+							{isCreateMode() ? 'Save & Send' : 'Save Changes'}
+						</Button>
+					</footer>
+				</Form>
+			</FormProvider>
 		</Dialog>
 	);
 };

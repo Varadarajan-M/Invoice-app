@@ -1,7 +1,5 @@
-/* eslint-disable no-useless-escape */
 import { formatDate, generateID, addToDate } from './../util';
-export const EMAIL_REGEX =
-	/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+import { EMAIL_REGEX } from './constants';
 
 const calcInvoiceTotal = (itemList) => {
 	const sum = itemList.reduce(
@@ -43,29 +41,6 @@ export const formatInvoiceData = (formData, invoiceids) => {
 	};
 };
 
-export const OPTION_LIST = [
-	{
-		value: 'Net 1 Day',
-		selected: false,
-	},
-	{
-		value: 'Net 7 Days',
-		selected: true,
-	},
-	{
-		value: 'Net 14 Days',
-		selected: false,
-	},
-	{
-		value: 'Net 30 Days',
-		selected: false,
-	},
-];
-
-export const DEFAULT_OPTION = OPTION_LIST.filter(
-	(option) => option.selected,
-)[0];
-
 export const validateItemErrors = (arr, index, key) => {
 	try {
 		const val = arr?.items[index][key];
@@ -76,3 +51,82 @@ export const validateItemErrors = (arr, index, key) => {
 		return null;
 	}
 };
+
+export const validations = Object.freeze({
+	fromStreetAddress: {
+		required: 'This field is required',
+		minLength: {
+			value: 3,
+			message: 'Should be a minimum of 3 characters',
+		},
+	},
+	fromCity: {
+		required: 'This field is required',
+		minLength: {
+			value: 3,
+			message: 'Should be a minimum of 3 characters',
+		},
+	},
+	fromPostcode: {
+		required: 'This field is required',
+		minLength: {
+			value: 4,
+			message: 'Should be a minimum of 4 characters',
+		},
+	},
+	fromCountry: {
+		required: 'This field is required',
+		minLength: {
+			value: 2,
+			message: 'Should be a minimum of 2 characters',
+		},
+	},
+	clientName: { required: 'This field is required' },
+	clientEmail: {
+		required: 'This field is required',
+		pattern: {
+			value: EMAIL_REGEX,
+			message: 'Invalid Email',
+		},
+	},
+
+	toStreetAddress: {
+		required: 'This field is required',
+		minLength: {
+			value: 3,
+			message: 'Should be a minimum of 3 characters',
+		},
+	},
+
+	toCity: {
+		required: 'This field is required',
+		minLength: {
+			value: 3,
+			message: 'Should be a minimum of 3 characters',
+		},
+	},
+
+	toPostcode: {
+		required: 'This field is required',
+		minLength: {
+			value: 4,
+			message: 'Should be a minimum of 4 characters',
+		},
+	},
+	toCountry: {
+		required: 'This field is required',
+		minLength: {
+			value: 2,
+			message: 'Should be a minimum of 2 characters',
+		},
+	},
+	price: {
+		required: 'This field is required',
+	},
+	quantity: {
+		required: 'This field is required',
+	},
+	itemName: {
+		required: 'This field is required',
+	},
+});

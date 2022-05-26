@@ -16,7 +16,6 @@
 	display: flex;
 	justify-content: flex-start !important;
 	flex-direction: column;
-	font-family: $spartan;
 
 	.MuiDialog-container {
 		display: flex;
@@ -44,7 +43,6 @@
 			font-size: calc(min(7vw, 30px));
 			font-weight: 600;
 			letter-spacing: 0.45px;
-			font-family: $spartan;
 			line-height: 23px;
 			margin: 10px 0;
 			transition: color 0.2s ease-in;
@@ -54,7 +52,6 @@
 	//form container styles
 	.invoice-form-children {
 		padding: 0 55px;
-		font-family: $spartan;
 	}
 
 	.invoice-form-buttons {

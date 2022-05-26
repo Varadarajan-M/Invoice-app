@@ -38,16 +38,13 @@ html {
 	padding: 0;
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
+	font-family: $spartan !important;
 }
 
 body {
 	transition: 0.2s ease-in;
-	font-family: $spartan;
 }
 
-Button {
-	font-family: $spartan !important;
-}
 .custom-button {
 	width: auto;
 	overflow: hidden;
@@ -94,13 +91,11 @@ Button {
 	background-position: right 0.75rem center;
 	background-size: 10px 7px;
 }
-// mui overrides
 
 @media screen and (min-width: 900px) {
 	.common-wrapper {
 		max-width: 65%;
 		margin-left: 21.5%;
-		// background-color: aqua;
 	}
 }
 

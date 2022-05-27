@@ -1,36 +1,15 @@
 import './InvoiceMenu.scss';
-import { useMemo, useState, useCallback } from 'react';
+import React from 'react';
 import Text from './../lib/components/Text';
 import Button from './../lib/components/Button';
-import MenuButton from './../lib/components/MenuButton';
-import {
-	MenuComponent,
-	MenuItemComponent,
-} from '../lib/components/MenuComponent';
-import RadioInput from '../lib/components/Radio';
 import { useTheme } from './../context/UIcontext';
-import { useInvoices } from './../context/InvoiceContext';
-import { Image } from 'react-bootstrap';
-import arrowdownIcon from './../assets/images/icon-arrow-down.svg';
+import Image from 'react-bootstrap/Image';
 import plusIcon from './../assets/images/icon-plus.svg';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import { FILTER_OPTIONS } from './helper';
+import InvoiceFilter from './InvoiceFilter';
 
-const InvoiceMenu = (props) => {
+const InvoiceMenu = React.memo((props) => {
 	const { onAddNew } = props;
 	const { theme } = useTheme();
-	const { filterInvoice, activeFilter, setActiveFilter } = useInvoices();
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = useMemo(() => Boolean(anchorEl), [anchorEl]);
-
-	const filterChangeHandler = useCallback(
-		({ target: { value } }) => {
-			setActiveFilter(value);
-			filterInvoice(value);
-		},
-		[filterInvoice, setActiveFilter],
-	);
 
 	return (
 		<div className='invoice-menu-wrapper'>
@@ -46,56 +25,9 @@ const InvoiceMenu = (props) => {
 				</Text>
 			</div>
 			<div className='invoice-action-buttons d-flex'>
-				{/* Filter By Status Button */}
-
-				<MenuButton
-					id={'fade-menu'}
-					style={{ ...theme.bwText }}
-					className='filter-btn mt-2'
-					onClick={(e) => setAnchorEl(e.currentTarget)}
-					open={open}
-				>
-					<span className='filter'>Filter</span>
-					<span className='ms-3'>
-						<Image
-							className={open ? 'up' : 'down'}
-							src={arrowdownIcon}
-							alt='arrow'
-						/>
-					</span>
-				</MenuButton>
-
 				{/* Filter Menu */}
 
-				<MenuComponent
-					open={open}
-					anchorEl={anchorEl}
-					handleClose={() => setAnchorEl(null)}
-				>
-					<FormControl className='w-100'>
-						<RadioGroup
-							aria-labelledby='radio-buttons-group-label'
-							name='radio-buttons-group'
-							onChange={filterChangeHandler}
-							defaultValue={activeFilter ?? ''}
-							value={activeFilter ?? ''}
-						>
-							{FILTER_OPTIONS.map((option, idx) => (
-								<MenuItemComponent key={idx}>
-									<RadioInput
-										value={option.name}
-										label={option.name}
-										style={{
-											padding: '5px 25px',
-											textAlign: 'center',
-											...theme.bwText,
-										}}
-									/>
-								</MenuItemComponent>
-							))}
-						</RadioGroup>
-					</FormControl>
-				</MenuComponent>
+				<InvoiceFilter />
 
 				{/* Add New Invoice Button	 */}
 				<Button
@@ -120,6 +52,6 @@ const InvoiceMenu = (props) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default InvoiceMenu;

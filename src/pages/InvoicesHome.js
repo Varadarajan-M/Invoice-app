@@ -9,6 +9,7 @@ const InvoicesHome = () => {
 	const onAddNew = useCallback(() => {
 		setFormOpen(true);
 	}, []);
+
 	const onBackDropClick = useCallback(() => {
 		setFormOpen(false);
 	}, []);

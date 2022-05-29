@@ -92,6 +92,11 @@ body {
 	background-size: 10px 7px;
 }
 
+.invoice-detail-wrapper {
+	position: relative;
+	height: 89.5vh;
+}
+
 @media screen and (min-width: 900px) {
 	.common-wrapper {
 		max-width: 65%;

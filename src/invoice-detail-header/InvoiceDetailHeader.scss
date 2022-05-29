@@ -1,0 +1,95 @@
+@import '../App';
+
+// General Styles.
+.invoice-detail-header {
+	.menu-card {
+		// Card styles
+
+		transition: 0.2s ease-in;
+		outline: none;
+		border: none;
+		border-radius: 10px;
+		box-shadow: none;
+		padding: 25px;
+		margin-block: 20px;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+
+		.menu-action-buttons {
+			display: flex;
+			gap: 10px;
+			justify-content: flex-end;
+		}
+
+		// Status
+		.status-wrapper {
+			gap: 30px;
+			.invoice-status.pending {
+				background: $pendingbg;
+				color: $pendingcolor;
+			}
+			.invoice-status.paid {
+				background: $paidbg;
+				color: $paidcolor;
+			}
+			.invoice-status.draft.light {
+				background: $draftbglight;
+				color: $draftcolorlight;
+			}
+			.invoice-status.draft.dark {
+				background: $draftbgdark;
+				color: $draftcolordark;
+			}
+			.invoice-status {
+				display: flex;
+				justify-content: center;
+				text-transform: capitalize;
+				background-color: rgb(223, 227, 250);
+				width: min(90px, 90px);
+				height: min(35px, 35px);
+				border-radius: 5px;
+				font-weight: 600;
+				padding: 7px;
+			}
+		}
+	}
+}
+
+// Breakpoint for menu layout to change
+@media (min-width: 647px) {
+	.invoice-detail-header {
+		.menu-card {
+			.status-wrapper,
+			.menu-action-buttons {
+				flex-basis: 50%;
+			}
+		}
+	}
+}
+// Small screen styles
+@media (max-width: 646px) {
+	.invoice-detail-header {
+		.menu-card {
+			.status-wrapper {
+				flex-basis: 100%;
+				justify-content: space-between;
+			}
+			.menu-action-buttons {
+				position: absolute;
+				bottom: 5px;
+				left: 0;
+				width: 100vw;
+				padding: 25px;
+				margin: 0 -13px;
+				transition: background 0.2s ease-in;
+				&.light {
+					background: white;
+				}
+				&.dark {
+					background: rgb(30, 33, 57);
+				}
+			}
+		}
+	}
+}

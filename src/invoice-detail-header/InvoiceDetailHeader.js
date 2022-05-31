@@ -14,7 +14,7 @@ const InvoiceDetailHeader = React.memo(({ status }) => {
 				{/* Status */}
 
 				<div className='status-wrapper d-flex align-items-center'>
-					<Text style={{ ...theme.greyWhiteText }}>Status</Text>
+					<Text className={`status-text ${mode}`}>Status</Text>
 
 					<div className={`invoice-status ${status} ${mode}`}>
 						<span className='dot'></span>
@@ -24,17 +24,15 @@ const InvoiceDetailHeader = React.memo(({ status }) => {
 
 				{/* Action Buttons */}
 				<div className={`menu-action-buttons ${mode}`}>
-					<Button style={{ ...theme.invoiceForm.buttons.discard }}>
+					<Button
+						className={`edit ${mode}`}
+						style={{ ...theme.invoiceForm.buttons.discard }}
+					>
 						{' '}
 						Edit
 					</Button>
-					<Button style={{ ...theme.invoiceForm.buttons.discard }}>
-						Delete
-					</Button>
-					<Button style={{ ...theme.invoiceForm.buttons.discard }}>
-						{' '}
-						Mark As Paid
-					</Button>
+					<Button className={`delete ${mode}`}>Delete</Button>
+					<Button className={`paid ${mode}`}> Mark As Paid</Button>
 				</div>
 			</Card>
 		</header>

@@ -1,5 +1,5 @@
 import { formatDate, generateID, addToDate } from './../util';
-import { EMAIL_REGEX } from './constants';
+import { EMAIL_REGEX, NEW_ITEM, OPTION_LIST } from './constants';
 
 const calcInvoiceTotal = (itemList) => {
 	const sum = itemList.reduce(
@@ -37,9 +37,31 @@ export const formatInvoiceData = (formData, invoiceids) => {
 			country: formData.toCountry ?? '',
 		},
 		items: formData.items ?? [],
+		description: formData.description ?? '',
 		total: calcInvoiceTotal(formData?.items ?? []),
 	};
 };
+
+export const getFormattedFormData = (data) => {
+	if (data)
+		return {
+			clientName: data?.clientName,
+			clientEmail: data?.clientEmail,
+			fromStreetAddress: data?.senderAddress.street,
+			fromCity: data?.senderAddress.city,
+			fromCountry: data?.senderAddress.country,
+			fromPostcode: data?.senderAddress.postCode,
+			toStreetAddress: data?.clientAddress.street,
+			toCity: data?.clientAddress.city,
+			toCountry: data?.clientAddress.country,
+			toPostcode: data?.clientAddress.postCode,
+			description: data?.description,
+			items: data?.items ?? [NEW_ITEM],
+		};
+};
+
+export const getPaymentTerms = (v) =>
+	OPTION_LIST.filter((option) => option.value.includes(v))[0];
 
 export const validateItemErrors = (arr, index, key) => {
 	try {

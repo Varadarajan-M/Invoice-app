@@ -46,12 +46,21 @@ export const InvoiceContextProvider = ({ children }) => {
 		setInvoices(filteredInvoices);
 	};
 
+	const updateInvoice = (updatedInvoice) => {
+		const data = invoices.map((invoice) =>
+			invoice.id === updatedInvoice.id ? updatedInvoice : invoice,
+		);
+		setInvoices(data);
+		setInvoiceData(data);
+	};
+
 	return (
 		<InvoiceContext.Provider
 			value={{
 				invoices,
 				invoiceids,
 				addInvoice,
+				updateInvoice,
 				filterInvoice,
 				activeFilter,
 				setActiveFilter,

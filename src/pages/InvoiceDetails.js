@@ -32,7 +32,7 @@ function InvoiceDetails(props) {
 				</Link>
 			</Text>
 
-			<InvoiceDetailHeader status={matchingInvoice.status ?? ''} />
+			<InvoiceDetailHeader matchingInvoice={matchingInvoice ?? {}} />
 
 			<main className='invoice-details-body bg-secondary'>
 				Invoice Detail Body

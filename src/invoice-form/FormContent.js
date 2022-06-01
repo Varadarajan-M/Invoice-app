@@ -19,7 +19,7 @@ import {
 	ToStreetAddress,
 } from './Fields';
 
-function Form() {
+function Form({ defaultDate, defaultPaymentTerm }) {
 	return (
 		<div className='content-form'>
 			<Text className='text-primary fw-bold'>Bill From</Text>
@@ -75,10 +75,10 @@ function Form() {
 			</Row>
 			<Row className='mt-4'>
 				<Col>
-					<InvoiceDate />
+					<InvoiceDate defaultDate={defaultDate} />
 				</Col>
 				<Col>
-					<PaymentTerms />
+					<PaymentTerms defaultPaymentTerm={defaultPaymentTerm} />
 				</Col>
 			</Row>
 			<Row>

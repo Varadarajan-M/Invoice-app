@@ -4,10 +4,16 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Text from '../lib/components/Text';
 import { useTheme } from '../context/UIcontext';
+import { useFormOpen } from '../invoice-form/hooks';
+import InvoiceForm from './../invoice-form/InvoiceForm';
 
-const InvoiceDetailHeader = React.memo(({ status }) => {
+const InvoiceDetailHeader = React.memo(({ matchingInvoice }) => {
 	const { theme, mode } = useTheme();
-
+	const {
+		formOpen,
+		onOpen: onEdit,
+		onClose: onBackDropClick,
+	} = useFormOpen();
 	return (
 		<header className='invoice-detail-header'>
 			<Card className='menu-card' style={{ ...theme.invoiceCard }}>
@@ -16,9 +22,11 @@ const InvoiceDetailHeader = React.memo(({ status }) => {
 				<div className='status-wrapper d-flex align-items-center'>
 					<Text className={`status-text ${mode}`}>Status</Text>
 
-					<div className={`invoice-status ${status} ${mode}`}>
+					<div
+						className={`invoice-status ${matchingInvoice.status} ${mode}`}
+					>
 						<span className='dot'></span>
-						<Text>{status}</Text>
+						<Text>{matchingInvoice.status}</Text>
 					</div>
 				</div>
 
@@ -27,6 +35,7 @@ const InvoiceDetailHeader = React.memo(({ status }) => {
 					<Button
 						className={`edit ${mode}`}
 						style={{ ...theme.invoiceForm.buttons.discard }}
+						onClick={onEdit}
 					>
 						{' '}
 						Edit
@@ -35,6 +44,13 @@ const InvoiceDetailHeader = React.memo(({ status }) => {
 					<Button className={`paid ${mode}`}> Mark As Paid</Button>
 				</div>
 			</Card>
+
+			<InvoiceForm
+				formMode='edit'
+				open={formOpen}
+				onBackDropClick={onBackDropClick}
+				activeData={matchingInvoice}
+			/>
 		</header>
 	);
 });

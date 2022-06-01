@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -9,8 +9,12 @@ import Text from '../lib/components/Text';
 import Form from 'react-bootstrap/Form';
 import { useForm, FormProvider } from 'react-hook-form';
 import FormContent from './FormContent';
-import { formatInvoiceData } from './helper';
-import { NEW_ITEM } from './constants';
+import {
+	formatInvoiceData,
+	getFormattedFormData,
+	getPaymentTerms,
+} from './helper';
+import { DEFAULT_OPTION, NEW_ITEM } from './constants';
 import './InvoiceForm.scss';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -19,25 +23,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const InvoiceForm = (props) => {
 	const { theme, mode } = useTheme();
-	const { invoiceids, addInvoice } = useInvoices();
-	const { onBackDropClick, open, className, formMode } = props;
+	const { invoiceids, addInvoice, updateInvoice } = useInvoices();
+	const { onBackDropClick, open, className, formMode, activeData } = props;
+
+	const formattedData = useMemo(
+		() => getFormattedFormData(activeData),
+		[activeData],
+	);
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
 		[className],
 	);
-	const isCreateMode = useCallback(() => formMode === 'create', [formMode]);
-	const isEditMode = useCallback(() => formMode !== 'create', [formMode]);
+	const isCreateMode = useMemo(() => formMode === 'create', [formMode]);
+	const isEditMode = useMemo(() => formMode !== 'create', [formMode]);
 
 	const title = useMemo(
-		() => (isCreateMode() ? 'Create Invoice' : 'Edit Invoice'),
-		[isCreateMode],
+		() => (isCreateMode ? 'Create Invoice' : `${activeData.id}`),
+		[isCreateMode, activeData],
 	);
 
 	const formData = useForm({
 		mode: 'all',
-		defaultValues: {
-			items: [NEW_ITEM],
-		},
+		defaultValues: isEditMode ? formattedData : { items: [NEW_ITEM] },
 	});
 
 	const saveAsDraftHandler = () => {
@@ -56,18 +63,26 @@ const InvoiceForm = (props) => {
 	};
 
 	const submitHandler = (data) =>
-		addInvoice(formatInvoiceData(data, invoiceids));
+		isCreateMode
+			? addInvoice(formatInvoiceData(data, invoiceids))
+			: updateInvoice(formatInvoiceData({ id: activeData.id, ...data }));
 
 	const {
 		formState: { isSubmitSuccessful },
 		reset,
 	} = formData;
+
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset();
 			onBackDropClick();
 		}
 	}, [isSubmitSuccessful, onBackDropClick, reset]);
+
+	useEffect(() => {
+		formData.reset(formattedData);
+		onBackDropClick();
+	}, [formattedData, formData, onBackDropClick]);
 
 	return (
 		<Dialog
@@ -96,7 +111,22 @@ const InvoiceForm = (props) => {
 							className='invoice-form-title'
 							style={{ ...theme.bwText }}
 						>
-							<Text>{title}</Text>
+							<Text>
+								{' '}
+								{isEditMode && (
+									<Text>
+										Edit{' '}
+										<span
+											style={{
+												color: 'rgb(126, 136, 195)',
+											}}
+										>
+											#
+										</span>
+									</Text>
+								)}
+								{title}
+							</Text>
 						</DialogTitle>
 					</header>
 
@@ -104,7 +134,20 @@ const InvoiceForm = (props) => {
 						className='invoice-form-children'
 						style={{ ...theme.body }}
 					>
-						<FormContent />
+						<FormContent
+							defaultDate={
+								isCreateMode
+									? new Date()
+									: new Date(activeData.createdAt)
+							}
+							defaultPaymentTerm={
+								isCreateMode
+									? DEFAULT_OPTION
+									: getPaymentTerms(
+											activeData.paymentTerms.toString(),
+									  )
+							}
+						/>
 					</main>
 
 					<footer
@@ -115,12 +158,12 @@ const InvoiceForm = (props) => {
 							<Button
 								type='button'
 								className={`start ${mode} ${
-									isEditMode() ? 'editMode' : ''
+									isEditMode ? 'editMode' : ''
 								}`}
 								onClick={discardHandler}
 								style={{
 									...theme.invoiceForm.buttons.discard,
-									visibility: isCreateMode()
+									visibility: isCreateMode
 										? 'visible'
 										: 'hidden',
 								}}
@@ -139,12 +182,12 @@ const InvoiceForm = (props) => {
 									: onBackDropClick
 							}
 							style={{
-								...(isCreateMode()
+								...(isCreateMode
 									? theme.invoiceForm.buttons.draft
 									: theme.invoiceForm.buttons.discard),
 							}}
 						>
-							{isCreateMode() ? 'Save as Draft' : 'Cancel'}
+							{isCreateMode ? 'Save as Draft' : 'Cancel'}
 						</Button>
 
 						<Button
@@ -153,7 +196,7 @@ const InvoiceForm = (props) => {
 							style={{ ...theme.invoiceForm.buttons.save }}
 						>
 							{' '}
-							{isCreateMode() ? 'Save & Send' : 'Save Changes'}
+							{isCreateMode ? 'Save & Send' : 'Save Changes'}
 						</Button>
 					</footer>
 				</Form>

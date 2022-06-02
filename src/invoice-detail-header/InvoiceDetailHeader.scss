@@ -4,57 +4,16 @@
 .invoice-detail-header {
 	.menu-card {
 		// Card styles
-
 		transition: 0.2s ease-in;
 		outline: none;
 		border: none;
 		border-radius: 10px;
 		box-shadow: none;
-		padding: 25px;
+		padding: 20px 25px;
 		margin-block: 20px;
 		display: flex;
 		align-items: center;
 		overflow: hidden;
-
-		.menu-action-buttons {
-			display: flex;
-			gap: 10px;
-			justify-content: flex-end;
-			button {
-				text-transform: none;
-				border-radius: 25px;
-				text-align: center;
-				font-weight: 700;
-				line-height: 0.95rem;
-				letter-spacing: 0.2px;
-				font-size: 0.93rem;
-				min-width: 4.8rem;
-				&:nth-of-type(2) {
-					color: white;
-					background: rgb(236, 87, 87);
-				}
-				&:nth-of-type(3) {
-					color: white;
-					background: $lightblue;
-				}
-			}
-			.edit.light:hover {
-				background: rgb(223, 227, 250) !important;
-			}
-
-			.edit.dark:hover {
-				background: #fff !important;
-			}
-
-			.delete:hover {
-				background: rgb(255, 151, 151);
-			}
-
-			.paid:hover {
-				background: rgb(146, 119, 255) !important;
-			}
-		}
-
 		// Status
 		.status-wrapper {
 			gap: 30px;
@@ -99,7 +58,53 @@
 		}
 	}
 }
+.invoice-details-body {
+	padding: 20px;
+	color: rgb(214, 134, 148);
+	margin-bottom: 20px;
+}
 
+.invoice-detail-header,
+.invoice-details-footer {
+	.menu-action-buttons {
+		display: flex;
+		gap: 10px;
+		justify-content: flex-end;
+		button {
+			text-transform: none;
+			border-radius: 25px;
+			text-align: center;
+			font-weight: 700;
+			line-height: 0.95rem;
+			letter-spacing: 0.2px;
+			font-size: 0.93rem;
+			min-width: 4.8rem;
+			&:nth-of-type(2) {
+				color: white;
+				background: rgb(236, 87, 87);
+			}
+			&:nth-of-type(3) {
+				color: white;
+				background: $lightblue;
+			}
+		}
+		.edit.light:hover {
+			background: rgb(223, 227, 250) !important;
+		}
+
+		.edit.dark:hover {
+			background: #fff !important;
+		}
+
+		.delete:hover {
+			background: rgb(255, 151, 151);
+		}
+
+		.paid:hover {
+			background: rgb(146, 119, 255) !important;
+		}
+	}
+}
 // Breakpoint for menu layout to change
 @media (min-width: 647px) {
 	.invoice-detail-header {
@@ -115,35 +120,53 @@
 			}
 		}
 	}
+	.invoice-details-footer {
+		.menu-action-buttons {
+			display: none;
+		}
+	}
+	.invoice-detail-wrapper {
+		position: relative;
+		padding-block: 20px;
+	}
 }
 // Small screen styles
 @media (max-width: 646px) {
 	.invoice-detail-header {
 		.menu-card {
+			padding-block: 15px;
 			.status-wrapper {
 				flex-basis: 100%;
 				justify-content: space-between;
 			}
 			.menu-action-buttons {
-				position: absolute;
-				bottom: 5px;
-				left: 0;
-				width: 100vw;
-				padding: 25px;
-				margin: 0 -13px;
-				transition: background 0.2s ease-in;
-				button {
-					min-width: 4.5rem;
-					padding: 0.96rem 1.0999999999999996rem !important;
-					font-size: 0.9rem;
-				}
-				&.light {
-					background: white;
-				}
-				&.dark {
-					background: rgb(30, 33, 57);
-				}
+				display: none;
 			}
 		}
+	}
+	.invoice-details-footer {
+		.menu-action-buttons {
+			width: 100vw;
+			padding: 20px 25px;
+			margin: 20px -13px;
+			transition: background 0.2s ease-in;
+			display: flex;
+			justify-content: flex-end;
+			button {
+				min-width: 4.5rem;
+				padding: 0.96rem 1.0999999999999996rem !important;
+				font-size: 0.9rem;
+			}
+			&.light {
+				background: white;
+			}
+			&.dark {
+				background: rgb(30, 33, 57);
+			}
+		}
+	}
+	.invoice-detail-wrapper {
+		position: relative;
+		padding-block: 0;
 	}
 }

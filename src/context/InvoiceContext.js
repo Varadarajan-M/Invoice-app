@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useMemo } from 'react';
+import {
+	createContext,
+	useContext,
+	useState,
+	useMemo,
+	useCallback,
+} from 'react';
 import { getInvoiceData, setInvoiceData } from './helper';
 
 const InvoiceContext = createContext({ invoices: [] });
@@ -13,9 +19,10 @@ export const InvoiceContextProvider = ({ children }) => {
 	);
 
 	// add invoice to list
-	const addInvoice = (invoice) => {
-		setInvoiceData([invoice, ...getInvoiceData()]);
-		/*
+	const addInvoice = useCallback(
+		(invoice) => {
+			setInvoiceData([invoice, ...getInvoiceData()]);
+			/*
 		At initial stage active filter will be null.
 		So that the newly added invoice must be rendered
 		into the screen.
@@ -30,30 +37,35 @@ export const InvoiceContextProvider = ({ children }) => {
 		Otherwise the value will be stored and rendered only on refresh 
 		or a matching filter change
 		*/
-		if (!activeFilter || invoice.status === activeFilter?.toLowerCase()) {
-			setInvoices((previousInvoices) => [
-				invoice,
-				...(previousInvoices ?? {}),
-			]);
-		}
-	};
+			if (
+				!activeFilter ||
+				invoice.status === activeFilter?.toLowerCase()
+			) {
+				setInvoices((previousInvoices) => [
+					invoice,
+					...(previousInvoices ?? {}),
+				]);
+			}
+		},
+		[activeFilter],
+	);
 	// filter invoices
-	const filterInvoice = (appliedFilter) => {
+	const filterInvoice = useCallback((appliedFilter) => {
 		const invoiceData = getInvoiceData();
 		const filteredInvoices = invoiceData.filter(
 			(invoice) => invoice.status === appliedFilter.toLowerCase(),
 		);
 		setInvoices(filteredInvoices);
-	};
+	}, []);
 
-	const updateInvoice = (updatedInvoice) => {
+	const updateInvoice = useCallback((updatedInvoice) => {
 		setActiveFilter(null);
 		const data = getInvoiceData().map((invoice) =>
 			invoice.id === updatedInvoice.id ? updatedInvoice : invoice,
 		);
 		setInvoices(data);
 		setInvoiceData(data);
-	};
+	}, []);
 
 	return (
 		<InvoiceContext.Provider

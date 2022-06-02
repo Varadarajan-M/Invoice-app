@@ -5,17 +5,27 @@ import { useTheme } from '../context/UIcontext';
 import { Link } from 'react-router-dom';
 import Text from '../lib/components/Text';
 import Image from 'react-bootstrap/Image';
-import InvoiceDetailHeader from './../invoice-detail-header/InvoiceDetailHeader';
+import InvoiceDetailHeader, {
+	InvoiceActionButtons,
+} from './../invoice-detail-header/InvoiceDetailHeader';
 import arrowleftIcon from './../assets/images/icon-arrow-left.svg';
+import { useFormOpen } from './../invoice-form/hooks';
+import InvoiceForm from './../invoice-form/InvoiceForm';
 
 function InvoiceDetails(props) {
 	const { invoices } = useInvoices();
 	const { theme } = useTheme();
 	const { id } = useParams();
+	const {
+		formOpen,
+		onOpen: onEdit,
+		onClose: onBackDropClick,
+	} = useFormOpen();
 	const matchingInvoice = useMemo(
 		() => invoices.filter((invoice) => invoice.id === id)[0],
 		[invoices, id],
 	);
+
 	return (
 		<div className='w-100 invoice-detail-wrapper'>
 			<Text>
@@ -32,11 +42,28 @@ function InvoiceDetails(props) {
 				</Link>
 			</Text>
 
-			<InvoiceDetailHeader matchingInvoice={matchingInvoice ?? {}} />
+			<InvoiceDetailHeader
+				status={matchingInvoice.status ?? ''}
+				onEdit={onEdit}
+			/>
 
-			<main className='invoice-details-body bg-secondary'>
-				Invoice Detail Body
+			<main
+				className='invoice-details-body'
+				style={{ ...theme.invoiceCard, minHeight: '200px' }}
+			>
+				<pre>{JSON.stringify(matchingInvoice, null, 10)}</pre>
 			</main>
+
+			<footer className='invoice-details-footer'>
+				<InvoiceActionButtons onEdit={onEdit} />
+			</footer>
+
+			<InvoiceForm
+				formMode='edit'
+				open={formOpen}
+				onBackDropClick={onBackDropClick}
+				activeData={matchingInvoice}
+			/>
 		</div>
 	);
 }

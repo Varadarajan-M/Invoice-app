@@ -32,6 +32,7 @@ input[type='number'] {
 }
 html {
 	scroll-behavior: smooth;
+	touch-action: manipulation;
 }
 * {
 	margin: 0;
@@ -90,11 +91,6 @@ body {
 	background-repeat: no-repeat;
 	background-position: right 0.75rem center;
 	background-size: 10px 7px;
-}
-
-.invoice-detail-wrapper {
-	position: relative;
-	height: 89.5vh;
 }
 
 @media screen and (min-width: 900px) {

@@ -4,9 +4,11 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Text from '../lib/components/Text';
 import { useTheme } from '../context/UIcontext';
+import { useInvoices } from '../context/InvoiceContext';
 
-export const InvoiceActionButtons = React.memo(({ onEdit }) => {
+export const InvoiceActionButtons = React.memo(({ id, status, onEdit }) => {
 	const { theme, mode } = useTheme();
+	const { markAsPaid } = useInvoices();
 	return (
 		<div className={`menu-action-buttons ${mode}`}>
 			<Button
@@ -18,12 +20,20 @@ export const InvoiceActionButtons = React.memo(({ onEdit }) => {
 				Edit
 			</Button>
 			<Button className={`delete ${mode}`}>Delete</Button>
-			<Button className={`paid ${mode}`}> Mark As Paid</Button>
+			{status !== 'paid' && (
+				<Button
+					onClick={() => markAsPaid(id)}
+					className={`paid ${mode}`}
+				>
+					{' '}
+					Mark As Paid
+				</Button>
+			)}
 		</div>
 	);
 });
 
-const InvoiceDetailHeader = React.memo(({ status, onEdit }) => {
+const InvoiceDetailHeader = React.memo(({ id, status, onEdit }) => {
 	const { theme, mode } = useTheme();
 
 	return (
@@ -41,7 +51,7 @@ const InvoiceDetailHeader = React.memo(({ status, onEdit }) => {
 				</div>
 
 				{/* Action Buttons */}
-				<InvoiceActionButtons onEdit={onEdit} />
+				<InvoiceActionButtons id={id} status={status} onEdit={onEdit} />
 			</Card>
 		</header>
 	);

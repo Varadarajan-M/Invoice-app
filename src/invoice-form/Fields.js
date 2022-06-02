@@ -261,6 +261,7 @@ function TotalValue({ index }) {
 		name: `items.${index}.quantity` || '',
 	});
 
+	// TODO remove useMemo as this is a computation with primitive values
 	const updatedTotal = useMemo(
 		() => (+updatedPrice ?? 0) * (+updatedQty ?? 0),
 		[updatedPrice, updatedQty],

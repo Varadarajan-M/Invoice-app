@@ -43,6 +43,7 @@ function InvoiceDetails(props) {
 			</Text>
 
 			<InvoiceDetailHeader
+				id={matchingInvoice.id ?? ''}
 				status={matchingInvoice.status ?? ''}
 				onEdit={onEdit}
 			/>
@@ -55,7 +56,11 @@ function InvoiceDetails(props) {
 			</main>
 
 			<footer className='invoice-details-footer'>
-				<InvoiceActionButtons onEdit={onEdit} />
+				<InvoiceActionButtons
+					id={matchingInvoice.id ?? ''}
+					status={matchingInvoice.status ?? ''}
+					onEdit={onEdit}
+				/>
 			</footer>
 
 			<InvoiceForm

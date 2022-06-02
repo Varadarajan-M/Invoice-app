@@ -67,6 +67,15 @@ export const InvoiceContextProvider = ({ children }) => {
 		setInvoiceData(data);
 	}, []);
 
+	const markAsPaid = (id) => {
+		setActiveFilter(null);
+		const updatedData = getInvoiceData().map((invoice) =>
+			invoice.id === id ? { ...invoice, status: 'paid' } : invoice,
+		);
+		setInvoices(updatedData);
+		setInvoiceData(updatedData);
+	};
+
 	return (
 		<InvoiceContext.Provider
 			value={{
@@ -74,6 +83,7 @@ export const InvoiceContextProvider = ({ children }) => {
 				invoiceids,
 				addInvoice,
 				updateInvoice,
+				markAsPaid,
 				filterInvoice,
 				activeFilter,
 				setActiveFilter,

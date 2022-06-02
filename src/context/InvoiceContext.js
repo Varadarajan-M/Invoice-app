@@ -47,7 +47,8 @@ export const InvoiceContextProvider = ({ children }) => {
 	};
 
 	const updateInvoice = (updatedInvoice) => {
-		const data = invoices.map((invoice) =>
+		setActiveFilter(null);
+		const data = getInvoiceData().map((invoice) =>
 			invoice.id === updatedInvoice.id ? updatedInvoice : invoice,
 		);
 		setInvoices(data);

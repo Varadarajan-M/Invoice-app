@@ -129,7 +129,9 @@
 	}
 
 	.MuiDialog-root {
-		top: 71px !important;
+		// top: 71px !important;
+		top: 33px !important;
+		height: 100vh;
 	}
 }
 

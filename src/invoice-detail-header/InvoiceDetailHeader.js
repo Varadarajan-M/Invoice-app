@@ -6,34 +6,38 @@ import Text from '../lib/components/Text';
 import { useTheme } from '../context/UIcontext';
 import { useInvoices } from '../context/InvoiceContext';
 
-export const InvoiceActionButtons = React.memo(({ id, status, onEdit }) => {
-	const { theme, mode } = useTheme();
-	const { markAsPaid } = useInvoices();
-	return (
-		<div className={`menu-action-buttons ${mode}`}>
-			<Button
-				className={`edit ${mode}`}
-				style={{ ...theme.invoiceForm.buttons.discard }}
-				onClick={onEdit}
-			>
-				{' '}
-				Edit
-			</Button>
-			<Button className={`delete ${mode}`}>Delete</Button>
-			{status !== 'paid' && (
+export const InvoiceActionButtons = React.memo(
+	({ id, status, onEdit, onDelete }) => {
+		const { theme, mode } = useTheme();
+		const { markAsPaid } = useInvoices();
+		return (
+			<div className={`menu-action-buttons ${mode}`}>
 				<Button
-					onClick={() => markAsPaid(id)}
-					className={`paid ${mode}`}
+					className={`edit ${mode}`}
+					style={{ ...theme.invoiceForm.buttons.discard }}
+					onClick={onEdit}
 				>
 					{' '}
-					Mark As Paid
+					Edit
 				</Button>
-			)}
-		</div>
-	);
-});
+				<Button className={`delete ${mode}`} onClick={onDelete}>
+					Delete
+				</Button>
+				{status !== 'paid' && (
+					<Button
+						onClick={() => markAsPaid(id)}
+						className={`paid ${mode}`}
+					>
+						{' '}
+						Mark As Paid
+					</Button>
+				)}
+			</div>
+		);
+	},
+);
 
-const InvoiceDetailHeader = React.memo(({ id, status, onEdit }) => {
+const InvoiceDetailHeader = React.memo(({ id, status, onEdit, onDelete }) => {
 	const { theme, mode } = useTheme();
 
 	return (
@@ -51,7 +55,12 @@ const InvoiceDetailHeader = React.memo(({ id, status, onEdit }) => {
 				</div>
 
 				{/* Action Buttons */}
-				<InvoiceActionButtons id={id} status={status} onEdit={onEdit} />
+				<InvoiceActionButtons
+					onDelete={onDelete}
+					id={id}
+					status={status}
+					onEdit={onEdit}
+				/>
 			</Card>
 		</header>
 	);

@@ -5,6 +5,7 @@ import {
 	useMemo,
 	useCallback,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getInvoiceData, setInvoiceData } from './helper';
 
 const InvoiceContext = createContext({ invoices: [] });
@@ -12,7 +13,7 @@ const InvoiceContext = createContext({ invoices: [] });
 export const InvoiceContextProvider = ({ children }) => {
 	const [invoices, setInvoices] = useState(getInvoiceData);
 	const [activeFilter, setActiveFilter] = useState(null);
-
+	const navigate = useNavigate();
 	const invoiceids = useMemo(
 		() => invoices.map((invoice) => invoice.id),
 		[invoices],
@@ -58,22 +59,30 @@ export const InvoiceContextProvider = ({ children }) => {
 		setInvoices(filteredInvoices);
 	}, []);
 
-	const updateInvoice = useCallback((updatedInvoice) => {
+	const updateInvoicesWFilterReset = (data) => {
 		setActiveFilter(null);
+		setInvoices(data);
+		setInvoiceData(data);
+	};
+
+	const updateInvoice = useCallback((updatedInvoice) => {
 		const data = getInvoiceData().map((invoice) =>
 			invoice.id === updatedInvoice.id ? updatedInvoice : invoice,
 		);
-		setInvoices(data);
-		setInvoiceData(data);
+		updateInvoicesWFilterReset(data);
 	}, []);
 
 	const markAsPaid = (id) => {
-		setActiveFilter(null);
 		const updatedData = getInvoiceData().map((invoice) =>
 			invoice.id === id ? { ...invoice, status: 'paid' } : invoice,
 		);
-		setInvoices(updatedData);
-		setInvoiceData(updatedData);
+		updateInvoicesWFilterReset(updatedData);
+	};
+
+	const deleteInvoice = (id) => {
+		const data = getInvoiceData().filter((invoice) => invoice.id !== id);
+		updateInvoicesWFilterReset(data);
+		navigate('/', { replace: true });
 	};
 
 	return (
@@ -85,6 +94,7 @@ export const InvoiceContextProvider = ({ children }) => {
 				updateInvoice,
 				markAsPaid,
 				filterInvoice,
+				deleteInvoice,
 				activeFilter,
 				setActiveFilter,
 			}}

@@ -7,6 +7,7 @@ const themes = {
 		navbar: { background: 'rgb(55, 59, 83)' },
 		bwText: { color: 'rgb(12, 14, 22)' },
 		greyWhiteText: { color: 'rgb(136 ,142, 176)' },
+		greySilver: { color: 'rgb(136 ,142, 176)' },
 		menu: { background: 'rgb(255,255,255)' },
 		invoiceCard: { background: 'rgb(255,255,255)' },
 		invoiceForm: {
@@ -42,6 +43,7 @@ const themes = {
 		navbar: { background: 'rgb(30, 33, 57)' },
 		bwText: { color: 'rgb(255,255,255)' },
 		greyWhiteText: { color: 'rgb(255,255,255)' },
+		greySilver: { color: 'rgb(223, 227, 250)' },
 		menu: { background: 'rgb(37, 41, 69)' },
 		invoiceCard: { background: 'rgb(30, 33, 57)' },
 		invoiceForm: {

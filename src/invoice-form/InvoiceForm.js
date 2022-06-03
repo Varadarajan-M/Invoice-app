@@ -87,6 +87,7 @@ const InvoiceForm = (props) => {
 
 	return (
 		<Dialog
+			transitionDuration={500}
 			className={classes}
 			open={open}
 			TransitionComponent={Transition}

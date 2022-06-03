@@ -11,9 +11,10 @@ import InvoiceDetailHeader, {
 import arrowleftIcon from './../assets/images/icon-arrow-left.svg';
 import { useFormOpen } from './../invoice-form/hooks';
 import InvoiceForm from './../invoice-form/InvoiceForm';
+import InvoiceDeleteDialog from '../invoice-detail-header/InvoiceDeleteDialog';
 
 function InvoiceDetails(props) {
-	const { invoices } = useInvoices();
+	const { invoices, deleteInvoice } = useInvoices();
 	const { theme } = useTheme();
 	const { id } = useParams();
 	const {
@@ -21,6 +22,13 @@ function InvoiceDetails(props) {
 		onOpen: onEdit,
 		onClose: onBackDropClick,
 	} = useFormOpen();
+
+	const {
+		formOpen: dialogOpen,
+		onOpen: onDelete,
+		onClose: onCancel,
+	} = useFormOpen();
+
 	const matchingInvoice = useMemo(
 		() => invoices.filter((invoice) => invoice.id === id)[0],
 		[invoices, id],
@@ -46,6 +54,7 @@ function InvoiceDetails(props) {
 				id={matchingInvoice.id ?? ''}
 				status={matchingInvoice.status ?? ''}
 				onEdit={onEdit}
+				onDelete={onDelete}
 			/>
 
 			<main
@@ -60,6 +69,7 @@ function InvoiceDetails(props) {
 					id={matchingInvoice.id ?? ''}
 					status={matchingInvoice.status ?? ''}
 					onEdit={onEdit}
+					onDelete={onDelete}
 				/>
 			</footer>
 
@@ -68,6 +78,16 @@ function InvoiceDetails(props) {
 				open={formOpen}
 				onBackDropClick={onBackDropClick}
 				activeData={matchingInvoice}
+			/>
+
+			<InvoiceDeleteDialog
+				open={dialogOpen}
+				onCancel={onCancel}
+				onDelete={(id) => {
+					onCancel();
+					deleteInvoice(id);
+				}}
+				id={matchingInvoice.id ?? ''}
 			/>
 		</div>
 	);

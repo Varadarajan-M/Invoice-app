@@ -129,7 +129,9 @@
 	}
 
 	.invoice-form.MuiDialog-root {
-		top: 71px !important;
+		// top: 71px !important;
+		top: 4% !important;
+		height: -webkit-fill-available;
 	}
 }
 
@@ -142,5 +144,14 @@
 			padding-left: 15px;
 			padding-right: 15px;
 		}
+	}
+}
+
+// landscape orientation for  invoice-form drawer
+
+@media (max-width: 900px) and (max-height: 500px) {
+	.invoice-form.MuiDialog-root {
+		top: 35px !important;
+		height: -webkit-fill-available;
 	}
 }

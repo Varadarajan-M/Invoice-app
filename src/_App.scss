@@ -32,6 +32,7 @@ input[type='number'] {
 }
 html {
 	scroll-behavior: smooth;
+	touch-action: manipulation;
 }
 * {
 	margin: 0;

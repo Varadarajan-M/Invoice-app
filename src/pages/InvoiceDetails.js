@@ -1,35 +1,96 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useInvoices } from '../context/InvoiceContext';
 import { useParams } from 'react-router-dom';
-import Text from '../lib/components/Text';
 import { useTheme } from '../context/UIcontext';
-import Image from 'react-bootstrap/Image';
-import arrowleftIcon from './../assets/images/icon-arrow-left.svg';
 import { Link } from 'react-router-dom';
+import Text from '../lib/components/Text';
+import Image from 'react-bootstrap/Image';
+import InvoiceDetailHeader, {
+	InvoiceActionButtons,
+} from './../invoice-detail-header/InvoiceDetailHeader';
+import arrowleftIcon from './../assets/images/icon-arrow-left.svg';
+import { useFormOpen } from './../invoice-form/hooks';
+import InvoiceForm from './../invoice-form/InvoiceForm';
+import InvoiceDeleteDialog from '../invoice-detail-header/InvoiceDeleteDialog';
 
 function InvoiceDetails(props) {
-  const { invoices } = useInvoices();
-  const { theme } = useTheme();
-  const { id } = useParams();
-  const matching = invoices.filter((invoice) => invoice.id === id)[0];
-  return (
-    <div className='w-100 invoice-detail-wrapper'>
-      <Text>
-        <Link to={`/`} style={{ textDecoration: 'none', ...theme.bwText }}>
-          <Image src={arrowleftIcon} alt='arrow' className='me-4 mb-1' />
-          Go back{' '}
-        </Link>
-      </Text>
+	const { invoices, deleteInvoice } = useInvoices();
+	const { theme } = useTheme();
+	const { id } = useParams();
+	const {
+		formOpen,
+		onOpen: onEdit,
+		onClose: onBackDropClick,
+	} = useFormOpen();
 
-      <header className='invoice-detail-header bg-primary'>
-        Invoice Details header
-      </header>
+	const {
+		formOpen: dialogOpen,
+		onOpen: onDelete,
+		onClose: onCancel,
+	} = useFormOpen();
 
-      <main className='invoice-details-body bg-secondary'>
-        Invoice Detail Body
-      </main>
-    </div>
-  );
+	const matchingInvoice = useMemo(
+		() => invoices.filter((invoice) => invoice.id === id)[0],
+		[invoices, id],
+	);
+
+	return (
+		<div className='w-100 invoice-detail-wrapper'>
+			<Text>
+				<Link
+					to={`/`}
+					style={{ textDecoration: 'none', ...theme.bwText }}
+				>
+					<Image
+						src={arrowleftIcon}
+						alt='arrow'
+						className='me-4 mb-1'
+					/>
+					Go back{' '}
+				</Link>
+			</Text>
+
+			<InvoiceDetailHeader
+				id={matchingInvoice.id ?? ''}
+				status={matchingInvoice.status ?? ''}
+				onEdit={onEdit}
+				onDelete={onDelete}
+			/>
+
+			<main
+				className='invoice-details-body'
+				style={{ ...theme.invoiceCard, minHeight: '200px' }}
+			>
+				<pre>{JSON.stringify(matchingInvoice, null, 10)}</pre>
+			</main>
+
+			<footer className='invoice-details-footer'>
+				<InvoiceActionButtons
+					id={matchingInvoice.id ?? ''}
+					status={matchingInvoice.status ?? ''}
+					onEdit={onEdit}
+					onDelete={onDelete}
+				/>
+			</footer>
+
+			<InvoiceForm
+				formMode='edit'
+				open={formOpen}
+				onBackDropClick={onBackDropClick}
+				activeData={matchingInvoice}
+			/>
+
+			<InvoiceDeleteDialog
+				open={dialogOpen}
+				onCancel={onCancel}
+				onDelete={(id) => {
+					onCancel();
+					deleteInvoice(id);
+				}}
+				id={matchingInvoice.id ?? ''}
+			/>
+		</div>
+	);
 }
 
 export default InvoiceDetails;

@@ -1,6 +1,6 @@
 import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import TextInput from './../lib/components/TextInput';
-import { OPTION_LIST, DEFAULT_OPTION } from './constants';
+import { OPTION_LIST } from './constants';
 import DropdownInput from './../lib/components/DropdownInput';
 import DateInput from './../lib/components/DateInput';
 import { Fragment, useMemo, useEffect } from 'react';
@@ -147,13 +147,13 @@ export const ToCountry = () => {
 	);
 };
 
-export const InvoiceDate = () => {
+export const InvoiceDate = ({ defaultDate }) => {
 	const { control } = useFormContext();
 	return (
 		<Controller
 			control={control}
 			name='invoiceDate'
-			defaultValue={new Date()}
+			defaultValue={defaultDate}
 			render={({ field }) => (
 				<DateInput
 					label='Invoice Date'
@@ -165,12 +165,12 @@ export const InvoiceDate = () => {
 	);
 };
 
-export const PaymentTerms = () => {
+export const PaymentTerms = ({ defaultPaymentTerm }) => {
 	const { register } = useFormContext();
 	return (
 		<DropdownInput
 			{...register('paymentTerms')}
-			defaultOption={DEFAULT_OPTION}
+			defaultOption={defaultPaymentTerm}
 			optionList={OPTION_LIST}
 			label='Payment Terms'
 		/>
@@ -261,6 +261,7 @@ function TotalValue({ index }) {
 		name: `items.${index}.quantity` || '',
 	});
 
+	// TODO remove useMemo as this is a computation with primitive values
 	const updatedTotal = useMemo(
 		() => (+updatedPrice ?? 0) * (+updatedQty ?? 0),
 		[updatedPrice, updatedQty],

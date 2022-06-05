@@ -22,6 +22,11 @@ export const Invoices = React.memo(() => {
 						style={{ textDecoration: 'none' }}
 					>
 						<Card
+							sx={{
+								'&:hover': {
+									border: '1px solid #8585ff',
+								},
+							}}
 							className='invoice-card'
 							style={{ ...theme.invoiceCard }}
 						>

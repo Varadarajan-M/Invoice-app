@@ -47,7 +47,7 @@
 		&:hover {
 			transform: scale(0.99);
 			box-shadow: 0 4px 8px 0 rgba(18, 18, 19, 0.1);
-			transition: transform 0.2s;
+			transition: all 0.2s 0.1s;
 		}
 		.invoice-status {
 			display: flex;

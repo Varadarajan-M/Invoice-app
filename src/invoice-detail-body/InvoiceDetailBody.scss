@@ -1,83 +1,138 @@
 .invoice-details-body {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 25px;
+	padding: 10px 25px;
+	margin-bottom: 20px;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-row-gap: 1rem;
+	transition: all 0.2s ease-in;
+	p {
+		margin-block: 5px;
+		font-size: 1.04rem;
+		line-height: 23px;
+	}
 
-    p {
-        margin-block: 5px;
-    }
+	.id-desc {
+		line-height: 22px;
+		p {
+			&:nth-of-type(1) {
+				font-weight: 700;
+				font-size: 1.3rem;
+				span {
+					color: rgb(126, 136, 195);
+					font-size: 1.3rem;
+				}
+			}
+			&:nth-of-type(2) {
+				font-weight: 300;
+			}
+		}
+	}
+	.from-address {
+		p span {
+			font-weight: 300;
+			line-height: 20px;
+		}
+	}
 
+	.invoice-date,
+	.payment-due {
+		line-height: 20px;
+		p {
+			&:nth-of-type(1) {
+				font-weight: 300;
+			}
+		}
+		p:nth-of-type(2) {
+			font-weight: 700;
+			font-size: 1.3rem;
+			letter-spacing: -0.04rem;
+		}
+	}
+	.bill-to {
+		line-height: 17px;
+		p {
+			&:nth-of-type(1),
+			&:nth-of-type(3) {
+				font-weight: 300;
+			}
+			&:nth-of-type(2) {
+				font-weight: 600;
+				font-size: 1.3rem;
+				line-height: 23px;
+			}
+		}
+	}
+	.sent-to {
+		line-height: 17px;
+
+		p:last-child {
+			font-weight: 600;
+			font-size: 1.3rem;
+			// letter-spacing: -0.04rem;
+		}
+	}
 }
 
 @media (min-width: 769px) {
-    .invoice-details-body {
+	.invoice-details-body {
+		.id-desc {
+			grid-row: 1;
+			grid-column: 1/3;
+		}
 
+		.from-address {
+			grid-row: 1;
+			grid-column: 4;
+			justify-self: end;
+			text-align: end;
+		}
 
+		.dates {
+			grid-row: 2/3;
+			grid-column: 1/2;
+			.invoice-date {
+				margin-bottom: 30px;
+			}
+		}
 
-        .id-desc {
-            grid-row: 1;
-            grid-column: 1;
-        }
+		.bill-to {
+			grid-row: 2/4;
+			grid-column: 2 / 4;
+			justify-self: center;
+		}
 
-        .from-address {
-            grid-row: 1;
-            grid-column: 3;
-            justify-self: end;
-        }
-
-        .invoice-date {
-            grid-row: 2/3;
-            grid-column: 1;
-        }
-
-        .bill-to {
-            grid-row: 2/4;
-            grid-column: 2 / 3;
-        }
-
-        .sent-to {
-            grid-row: 2;
-            grid-column: 3;
-        }
-
-        .payment-due {
-            grid-row: 3/4;
-            grid-column: 1 /2;
-        }
-    }
-
-
+		.sent-to {
+			grid-row: 2;
+			grid-column: 4/5;
+		}
+	}
 }
 
-@media(max-width:768px) {
-    .invoice-details-body {
-        .id-desc {
-            grid-area: 1/1;
-        }
+@media (max-width: 769px) {
+	.invoice-details-body {
+		.id-desc {
+			grid-area: 1 / 1 / 2 / span 4;
+		}
 
-        .from-address {
-            grid-area: 2/1;
-        }
+		.from-address {
+			grid-area: 2 / 1 / 3 / span 4;
+		}
 
-        .invoice-date {
-            grid-row: 3/4;
-            grid-column: 1/2;
-        }
+		.dates {
+			grid-row: 3/5;
+			grid-column: 1/2;
+			.invoice-date {
+				margin-bottom: 30px;
+			}
+		}
 
-        .bill-to {
-            grid-row: 3/5;
-            grid-column: 2;
-        }
+		.bill-to {
+			grid-row: 3/5;
+			grid-column: 3;
+		}
 
-        .sent-to {
-            grid-row: 5;
-            grid-column: 1;
-        }
-
-        .payment-due {
-            grid-row: 4/5;
-            grid-column: 1 /2;
-        }
-    }
+		.sent-to {
+			grid-area: 5 / 1 / 5 / span 4;
+		}
+	}
 }

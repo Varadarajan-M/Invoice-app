@@ -1,6 +1,21 @@
 import React, { Fragment } from 'react';
-import './InvoiceDetailBody.scss';
+import Text from '../lib/components/Text'
 import { formatDateToString, joinKeys } from '../util';
+import { useTheme } from './../context/UIcontext';
+import './InvoiceDetailBody.scss';
+
+
+const Address = ({address}) => {
+  const list = address.split('-');
+  return(
+    <>
+      {
+        list?.map(d => <><Text>{d}</Text><br/></>)
+      }
+    </>
+  )
+}
+
 
 const InvoiceDetailBody = ({ matchingInvoice }) => {
   const {
@@ -13,33 +28,37 @@ const InvoiceDetailBody = ({ matchingInvoice }) => {
     clientName,
     paymentDue,
   } = matchingInvoice;
+  const {theme} = useTheme();
   return (
     <Fragment>
       <div className='id-desc'>
-        <p>{id}</p>
-        <p>{description}</p>
+        <p style={{...theme.bwText}}><span>#</span>{id}</p>
+        <p style={{...theme.greySilver}}>{description}</p>
       </div>
       <div className='from-address'>
-        <p>From Address</p>
-        <pre>{joinKeys(senderAddress)}</pre>
+        <p style={{...theme.greySilver}}><Address address={joinKeys(senderAddress,'-')} /></p>
       </div>
+      <div className='dates'>
       <div className='invoice-date'>
-        <p>Invoice Date</p>
-        <p>{formatDateToString(createdAt)}</p>
-      </div>
-      <div className='bill-to'>
-        <p>Bill To</p>
-        <p>{clientName}</p>
-        <pre>{joinKeys(clientAddress)}</pre>
-      </div>
-      <div className='sent-to'>
-        <p>Sent To</p>
-        <p>{clientEmail} </p>
+        <p style={{...theme.greySilver}}>Invoice Date</p>
+        <p style={{...theme.bwText}}>{formatDateToString(createdAt)}</p>
       </div>
       <div className='payment-due'>
-        <p>Payment Due</p>
-        <p>{formatDateToString(paymentDue)}</p>
+        <p style={{...theme.greySilver}}>Payment Due</p>
+        <p style={{...theme.bwText}}>{formatDateToString(paymentDue)}</p>
+        </div>
       </div>
+      <div className='bill-to'>
+        <p style={{...theme.greySilver}}>Bill To</p>
+        <p style={{...theme.bwText}}>{clientName}</p>
+        <p style={{...theme.greySilver}}><Address address={joinKeys(clientAddress,'-')} /></p>
+     
+      </div>
+      <div className='sent-to'>
+        <p style={{...theme.greySilver}}>Sent To</p>
+        <p style={{...theme.bwText}}>{clientEmail} </p>
+      </div>
+     
       {/* Total Amount */}
     </Fragment>
   );

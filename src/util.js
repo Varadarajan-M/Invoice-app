@@ -101,10 +101,4 @@ export const substractFromDate = (date, days) => {
 
  @description Joins the object keys and returns a string with a separator provided. Separator Defaults to `\n`
  */
-export const joinKeys = (obj, seperator = '\n') => {
-  let str = '';
-  for (const key in obj) {
-    str += `${obj[key]}${seperator}`;
-  }
-  return str;
-};
+export const joinKeys = (obj, seperator = '\n') => Object.values(obj).join(seperator)

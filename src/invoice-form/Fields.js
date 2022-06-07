@@ -230,7 +230,7 @@ export const Price = ({ index }) => {
 		<Fragment>
 			<StyledLabel className='d-sm-none d-inline-block' label='Price' />
 			<TextInput
-				type='number'
+				type='text'
 				min={0}
 				{...register(`items.${index}.price`, validations.price)}
 				errors={validateItemErrors(errors ?? [], index, 'price')}

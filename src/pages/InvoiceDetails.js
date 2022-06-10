@@ -14,6 +14,8 @@ import InvoiceForm from './../invoice-form/InvoiceForm';
 import InvoiceDeleteDialog from '../invoice-detail-header/InvoiceDeleteDialog';
 import InvoiceDetailBody from '../invoice-detail-body/InvoiceDetailBody';
 import GetStarted from '../lib/components/GetStarted';
+import { motion } from 'framer-motion';
+import { detail } from '../animations/variants';
 
 function InvoiceDetails(props) {
 	const { invoices, deleteInvoice } = useInvoices();
@@ -37,7 +39,13 @@ function InvoiceDetails(props) {
 	);
 	if (matchingInvoice?.id) {
 		return (
-			<div className='w-100 invoice-detail-wrapper'>
+			<motion.div
+				initial='initial'
+				animate='in'
+				exit='out'
+				variants={detail}
+				className='w-100 invoice-detail-wrapper'
+			>
 				<Text>
 					<Link
 						to={`/`}
@@ -92,13 +100,13 @@ function InvoiceDetails(props) {
 					}}
 					id={matchingInvoice.id ?? ''}
 				/>
-			</div>
+			</motion.div>
 		);
 	} else {
 		return (
-			<div className='d-flex mt-5 justify-content-center align-items-center'>
+			<motion.div className='d-flex mt-5 justify-content-center align-items-center'>
 				<GetStarted />
-			</div>
+			</motion.div>
 		);
 	}
 }

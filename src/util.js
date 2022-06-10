@@ -1,28 +1,28 @@
 const generateString = (len = 1) => {
-	let text = '';
-	let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	for (let i = 0; i < len; i++)
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
-	return text;
+  let text = '';
+  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let i = 0; i < len; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
 };
 
 const randomNum = () => Math.random().toString().substr(2, 4);
 
 export const generateID = (list) => {
-	const listSet = new Set(list);
+  const listSet = new Set(list);
 
-	const _generateID = (set) => {
-		const randomString = generateString(2);
-		const finalString = randomString + randomNum();
+  const _generateID = (set) => {
+    const randomString = generateString(2);
+    const finalString = randomString + randomNum();
 
-		if (set.has(finalString)) {
-			return _generateID(list);
-		}
+    if (set.has(finalString)) {
+      return _generateID(list);
+    }
 
-		return finalString;
-	};
+    return finalString;
+  };
 
-	return _generateID(listSet);
+  return _generateID(listSet);
 };
 
 // Some date formatter util functions
@@ -34,8 +34,8 @@ export const generateID = (list) => {
  @description Accepts a date string and returns the formatted date in `dd-mmm-yyyy` format 
  */
 export const formatDateToString = (date) => {
-	const [, mm, dd, yy] = new Date(date).toDateString().split(' ');
-	return [dd, mm, yy].join(' ');
+  const [, mm, dd, yy] = new Date(date).toDateString().split(' ');
+  return [dd, mm, yy].join(' ');
 };
 
 /**
@@ -48,24 +48,24 @@ export const formatDateToString = (date) => {
  defaults to `dd-mm-yy` with `-` as seperator 
  */
 export const formatDate = (date, pattern, seperator = '-') => {
-	date = new Date(date);
-	const [dd, mm, yy] = [
-		date.getDate(),
-		date.getMonth() + 1,
-		date.getFullYear(),
-	];
-	switch (pattern) {
-		case 'dd-mm-yy':
-			return [dd, mm, yy].join(seperator);
-		case 'mm-dd-yy':
-			return [mm, dd, yy].join(seperator);
-		case 'yy-mm-dd':
-			return [yy, mm, dd].join(seperator);
-		case 'yy-dd-mm':
-			return [yy, mm, dd].join(seperator);
-		default:
-			return [dd, mm, yy].join(seperator);
-	}
+  date = new Date(date);
+  const [dd, mm, yy] = [
+    date.getDate(),
+    date.getMonth() + 1,
+    date.getFullYear(),
+  ];
+  switch (pattern) {
+    case 'dd-mm-yy':
+      return [dd, mm, yy].join(seperator);
+    case 'mm-dd-yy':
+      return [mm, dd, yy].join(seperator);
+    case 'yy-mm-dd':
+      return [yy, mm, dd].join(seperator);
+    case 'yy-dd-mm':
+      return [yy, mm, dd].join(seperator);
+    default:
+      return [dd, mm, yy].join(seperator);
+  }
 };
 
 /**
@@ -76,9 +76,9 @@ export const formatDate = (date, pattern, seperator = '-') => {
  @description Adds specified number of days to the date string and returns it.
  */
 export const addToDate = (date, days) => {
-	date = new Date(date);
-	date.setDate(date.getDate() + days);
-	return date;
+  date = new Date(date);
+  date.setDate(date.getDate() + days);
+  return date;
 };
 
 /**
@@ -89,7 +89,16 @@ export const addToDate = (date, days) => {
  @description Substracts specified number of days from the date string and returns it.
  */
 export const substractFromDate = (date, days) => {
-	date = new Date(date);
-	date.setDate(date.getDate() - days);
-	return date;
+  date = new Date(date);
+  date.setDate(date.getDate() - days);
+  return date;
 };
+
+/**
+ @func joinKeys
+ @param obj Object
+ @param seperator String
+
+ @description Joins the object keys and returns a string with a separator provided. Separator Defaults to `\n`
+ */
+export const joinKeys = (obj, seperator = '\n') => Object.values(obj).join(seperator)

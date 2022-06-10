@@ -12,6 +12,8 @@ import arrowleftIcon from './../assets/images/icon-arrow-left.svg';
 import { useFormOpen } from './../invoice-form/hooks';
 import InvoiceForm from './../invoice-form/InvoiceForm';
 import InvoiceDeleteDialog from '../invoice-detail-header/InvoiceDeleteDialog';
+import InvoiceDetailBody from '../invoice-detail-body/InvoiceDetailBody';
+import GetStarted from '../lib/components/GetStarted';
 
 function InvoiceDetails(props) {
 	const { invoices, deleteInvoice } = useInvoices();
@@ -33,64 +35,72 @@ function InvoiceDetails(props) {
 		() => invoices.filter((invoice) => invoice.id === id)[0],
 		[invoices, id],
 	);
+	if (matchingInvoice?.id) {
+		return (
+			<div className='w-100 invoice-detail-wrapper'>
+				<Text>
+					<Link
+						to={`/`}
+						style={{ textDecoration: 'none', ...theme.bwText }}
+					>
+						<Image
+							src={arrowleftIcon}
+							alt='arrow'
+							className='me-4 mb-1'
+						/>
+						Go back{' '}
+					</Link>
+				</Text>
 
-	return (
-		<div className='w-100 invoice-detail-wrapper'>
-			<Text>
-				<Link
-					to={`/`}
-					style={{ textDecoration: 'none', ...theme.bwText }}
-				>
-					<Image
-						src={arrowleftIcon}
-						alt='arrow'
-						className='me-4 mb-1'
-					/>
-					Go back{' '}
-				</Link>
-			</Text>
-
-			<InvoiceDetailHeader
-				id={matchingInvoice.id ?? ''}
-				status={matchingInvoice.status ?? ''}
-				onEdit={onEdit}
-				onDelete={onDelete}
-			/>
-
-			<main
-				className='invoice-details-body'
-				style={{ ...theme.invoiceCard, minHeight: '200px' }}
-			>
-				<pre>{JSON.stringify(matchingInvoice, null, 10)}</pre>
-			</main>
-
-			<footer className='invoice-details-footer'>
-				<InvoiceActionButtons
+				<InvoiceDetailHeader
 					id={matchingInvoice.id ?? ''}
 					status={matchingInvoice.status ?? ''}
 					onEdit={onEdit}
 					onDelete={onDelete}
 				/>
-			</footer>
 
-			<InvoiceForm
-				formMode='edit'
-				open={formOpen}
-				onBackDropClick={onBackDropClick}
-				activeData={matchingInvoice}
-			/>
+				<main
+					className='invoice-details-body'
+					style={{ ...theme.invoiceCard, minHeight: '200px' }}
+				>
+					{/* <pre>{JSON.stringify(matchingInvoice, null, 10)}</pre> */}
+					<InvoiceDetailBody matchingInvoice={matchingInvoice} />
+				</main>
 
-			<InvoiceDeleteDialog
-				open={dialogOpen}
-				onCancel={onCancel}
-				onDelete={(id) => {
-					onCancel();
-					deleteInvoice(id);
-				}}
-				id={matchingInvoice.id ?? ''}
-			/>
-		</div>
-	);
+				<footer className='invoice-details-footer'>
+					<InvoiceActionButtons
+						id={matchingInvoice.id ?? ''}
+						status={matchingInvoice.status ?? ''}
+						onEdit={onEdit}
+						onDelete={onDelete}
+					/>
+				</footer>
+
+				<InvoiceForm
+					formMode='edit'
+					open={formOpen}
+					onBackDropClick={onBackDropClick}
+					activeData={matchingInvoice}
+				/>
+
+				<InvoiceDeleteDialog
+					open={dialogOpen}
+					onCancel={onCancel}
+					onDelete={(id) => {
+						onCancel();
+						deleteInvoice(id);
+					}}
+					id={matchingInvoice.id ?? ''}
+				/>
+			</div>
+		);
+	} else {
+		return (
+			<div className='d-flex mt-5 justify-content-center align-items-center'>
+				<GetStarted />
+			</div>
+		);
+	}
 }
 
 export default InvoiceDetails;

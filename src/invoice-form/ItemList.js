@@ -10,9 +10,10 @@ import { useFormContext, useFieldArray } from 'react-hook-form';
 import { useTheme } from '../context/UIcontext';
 import { ItemName, Price, Quantity, Total } from './Fields';
 
-const ItemListHeadings = () => {
+export const ItemListHeadings = ({className}) => {
+
 	return (
-		<Row className='d-sm-flex d-none'>
+		<Row className={className}>
 			<Col sm={4} lg={4} md={4} xs={12} className='mt-2'>
 				<StyledLabel label='Item Name' />
 			</Col>
@@ -72,7 +73,7 @@ const ItemList = () => {
 	});
 	return (
 		<Fragment>
-			<ItemListHeadings />
+			<ItemListHeadings className={'d-sm-flex d-none'}/>
 			<div className='item-list-wrapper'>
 				{fields.map((field, index) => {
 					return (

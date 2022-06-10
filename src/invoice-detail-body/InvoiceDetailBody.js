@@ -13,8 +13,8 @@ const Address = ({ address }) => {
 	const list = address.split('-');
 	return (
 		<>
-			{list?.map((d) => (
-				<React.Fragment key={d}>
+			{list?.map((d, i) => (
+				<React.Fragment key={i}>
 					<Text>{d}</Text>
 					<br />
 				</React.Fragment>

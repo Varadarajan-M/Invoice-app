@@ -6,10 +6,13 @@ import { useTheme } from './../context/UIcontext';
 import Image from 'react-bootstrap/Image';
 import plusIcon from './../assets/images/icon-plus.svg';
 import InvoiceFilter from './InvoiceFilter';
+import { useInvoices } from '../context/InvoiceContext';
+import { getInvoiceString } from './helper';
 
 const InvoiceMenu = React.memo((props) => {
 	const { onAddNew } = props;
 	const { theme } = useTheme();
+	const { activeFilter, invoices } = useInvoices();
 
 	return (
 		<div className='invoice-menu-wrapper'>
@@ -19,9 +22,9 @@ const InvoiceMenu = React.memo((props) => {
 				</Text>
 				<Text
 					className='invoice-count'
-					style={{ ...theme.greyWhiteText }}
+					style={{ ...theme.greySilver, fontWeight: 300 }}
 				>
-					There are 7 total invoices.
+					{getInvoiceString(activeFilter, invoices?.length ?? 0)}
 				</Text>
 			</div>
 			<div className='invoice-action-buttons d-flex'>

@@ -37,6 +37,13 @@ const themes = {
 				background: 'black !important',
 			},
 		},
+		itemListwrapper: {
+			background: 'rgb(249, 250, 254)',
+		},
+		itemListwrapperAmount: {
+			background: 'rgb(55, 59, 83)',
+			color: '#fff',
+		},
 	},
 	darkMode: {
 		body: { background: 'rgb(20, 22, 37)' },
@@ -71,6 +78,13 @@ const themes = {
 			input: {
 				background: 'black',
 			},
+		},
+		itemListwrapper: {
+			background: 'rgb(37, 41, 69)',
+		},
+		itemListwrapperAmount: {
+			background: 'rgb(12, 14, 22)',
+			color: '#fff',
 		},
 	},
 };

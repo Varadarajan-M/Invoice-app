@@ -4,7 +4,7 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-row-gap: 1rem;
-	transition: all 0.2s ease-in;
+	transition: color 0.2s ease-in, background 0.2s ease-in;
 	p {
 		margin-block: 5px;
 		font-size: 1.04rem;
@@ -64,11 +64,42 @@
 	}
 	.sent-to {
 		line-height: 17px;
-
+		word-break: break-all;
 		p:last-child {
 			font-weight: 600;
 			font-size: 1.3rem;
 			// letter-spacing: -0.04rem;
+		}
+	}
+	.itemlist-wrapper {
+		border-radius: 5px;
+		// padding: 30px;
+		margin-block: 40px;
+		div {
+			::-webkit-scrollbar {
+				display: none;
+			}
+		}
+		.item-row {
+			font-weight: 600;
+			font-size: 17px;
+			letter-spacing: 1px;
+			margin-block: 20px;
+			word-wrap: break-word;
+			align-items: center;
+		}
+		.amount {
+			align-items: center;
+			flex-wrap: wrap;
+			.text {
+				font-weight: 400;
+			}
+			.total-amount {
+				font-size: 1.42rem;
+				font-weight: bolder;
+				overflow-x: scroll;
+				word-wrap: break-word;
+			}
 		}
 	}
 }
@@ -105,6 +136,11 @@
 			grid-row: 2;
 			grid-column: 4/5;
 		}
+
+		.itemlist-wrapper {
+			grid-row: 4;
+			grid-column: 1/5;
+		}
 	}
 }
 
@@ -133,6 +169,10 @@
 
 		.sent-to {
 			grid-area: 5 / 1 / 5 / span 4;
+		}
+		.itemlist-wrapper {
+			grid-row: 6;
+			grid-column: 1/5;
 		}
 	}
 }

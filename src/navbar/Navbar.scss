@@ -9,7 +9,7 @@
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
-	z-index: 16000;
+	z-index: 1301;
 
 	.brand-logo {
 		background: $lightblue;
@@ -154,4 +154,14 @@
 		top: 35px !important;
 		height: -webkit-fill-available;
 	}
+}
+
+
+.profile {
+	position: fixed;
+	color: rgb(255, 251, 125);
+	background: linear-gradient(45deg, rgb(133, 255, 189) 0%, rgb(255, 251, 125) 100%) text;
+	backdrop-filter: blur(4px);
+
+
 }

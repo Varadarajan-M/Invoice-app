@@ -12,7 +12,7 @@ const InvoiceContext = createContext({ invoices: [] });
 
 export const InvoiceContextProvider = ({ children }) => {
 	const [invoices, setInvoices] = useState(getInvoiceData);
-	const [activeFilter, setActiveFilter] = useState(null);
+	const [activeFilter, setActiveFilter] = useState('All');
 	const navigate = useNavigate();
 	const invoiceids = useMemo(
 		() => invoices.map((invoice) => invoice.id),
@@ -24,11 +24,11 @@ export const InvoiceContextProvider = ({ children }) => {
 		(invoice) => {
 			setInvoiceData([invoice, ...getInvoiceData()]);
 			/*
-		At initial stage active filter will be null.
+		At initial stage active filter will be All.
 		So that the newly added invoice must be rendered
 		into the screen.
 
-		if activeFilter is not null,
+		if activeFilter is not All,
 		That means now we are applying some kinda filter.
 
 		So now if we add a new invoice now...
@@ -39,7 +39,7 @@ export const InvoiceContextProvider = ({ children }) => {
 		or a matching filter change
 		*/
 			if (
-				!activeFilter ||
+				activeFilter === 'All' ||
 				invoice.status === activeFilter?.toLowerCase()
 			) {
 				setInvoices((previousInvoices) => [
@@ -53,14 +53,18 @@ export const InvoiceContextProvider = ({ children }) => {
 	// filter invoices
 	const filterInvoice = useCallback((appliedFilter) => {
 		const invoiceData = getInvoiceData();
-		const filteredInvoices = invoiceData.filter(
-			(invoice) => invoice.status === appliedFilter.toLowerCase(),
-		);
-		setInvoices(filteredInvoices);
+		if (appliedFilter !== 'All') {
+			const filteredInvoices = invoiceData.filter(
+				(invoice) => invoice.status === appliedFilter.toLowerCase(),
+			);
+			setInvoices(filteredInvoices);
+		} else {
+			setInvoices(invoiceData);
+		}
 	}, []);
 
 	const updateInvoicesWFilterReset = (data) => {
-		setActiveFilter(null);
+		setActiveFilter('All');
 		setInvoices(data);
 		setInvoiceData(data);
 	};

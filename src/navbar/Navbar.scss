@@ -9,7 +9,7 @@
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
-	z-index: 16000;
+	z-index: 1301;
 
 	.brand-logo {
 		background: $lightblue;
@@ -153,5 +153,35 @@
 	.invoice-form.MuiDialog-root {
 		top: 35px !important;
 		height: -webkit-fill-available;
+	}
+}
+
+.profile {
+	position: fixed;
+	color: rgb(255, 251, 125);
+	background: linear-gradient(
+			45deg,
+			rgb(133, 255, 189) 0%,
+			rgb(255, 251, 125) 100%
+		)
+		text;
+	cursor: pointer;
+
+	.links {
+		color: rgb(255, 251, 125) !important;
+		transition: transform 0.3s ease;
+		&::after {
+			content: '';
+			display: block;
+			width: 0;
+			height: 1.5px;
+			background: yellow;
+			border-radius: 20px;
+			transition: width 0.1s ease-in;
+		}
+
+		&:hover::after {
+			width: 100%;
+		}
 	}
 }

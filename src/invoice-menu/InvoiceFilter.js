@@ -63,7 +63,7 @@ const InvoiceFilter = React.memo(() => {
 						{FILTER_OPTIONS.map((option, idx) => (
 							<MenuItemComponent key={idx}>
 								<RadioInput
-									value={option.name}
+									value={option.value}
 									label={option.name}
 									style={{
 										padding: '5px 25px',

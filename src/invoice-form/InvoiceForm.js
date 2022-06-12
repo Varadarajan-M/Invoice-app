@@ -93,7 +93,7 @@ const InvoiceForm = (props) => {
 			TransitionComponent={Transition}
 			onClose={onBackDropClick}
 			sx={{
-				'.css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+				'.MuiDialog-paper': {
 					boxShadow: 'none',
 					borderTopRightRadius: '25px',
 					borderBottomRightRadius: '25px',

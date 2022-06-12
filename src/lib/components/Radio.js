@@ -14,7 +14,7 @@ const RadioInput = (props) => {
 				...style,
 			}}
 			sx={{
-				'.css-ahj2mt-MuiTypography-root': {
+				'.MuiTypography-root': {
 					fontFamily: 'League Spartan, sans-serif',
 					fontWeight: 600,
 				},

@@ -62,7 +62,7 @@ export const formatDate = (date, pattern, seperator = '-') => {
     case 'yy-mm-dd':
       return [yy, mm, dd].join(seperator);
     case 'yy-dd-mm':
-      return [yy, mm, dd].join(seperator);
+      return [yy, dd, mm].join(seperator);
     default:
       return [dd, mm, yy].join(seperator);
   }

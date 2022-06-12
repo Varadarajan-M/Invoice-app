@@ -3,14 +3,14 @@ import { useInvoices } from '../context/InvoiceContext';
 import Card from '@mui/material/Card';
 import arrowRightIcon from '../assets/images/icon-arrow-right.svg';
 import { formatDateToString } from '../util';
-import './invoices.scss';
-import { Image } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 import { useTheme } from '../context/UIcontext';
 import Text from './../lib/components/Text';
 import { Link } from 'react-router-dom';
 import GetStarted from '../lib/components/GetStarted';
 import AnimatedCard from '../animations/AnimatedCard';
 import { AnimatePresence } from 'framer-motion';
+import './invoices.scss';
 
 export const Invoices = React.memo(() => {
 	const { invoices } = useInvoices();

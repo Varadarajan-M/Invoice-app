@@ -23,4 +23,3 @@ export const detail = {
 		transition: { duration: 1 },
 	},
 };
-

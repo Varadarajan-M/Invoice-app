@@ -16,7 +16,6 @@
 	display: flex;
 	justify-content: flex-start !important;
 	flex-direction: column;
-
 	.MuiDialog-container {
 		display: flex;
 		justify-content: flex-start !important;
@@ -51,6 +50,8 @@
 	//form container styles
 	.invoice-form-children {
 		padding: 0 55px;
+		height: 100%;
+		overflow: auto;
 	}
 
 	.invoice-form-buttons {
@@ -102,7 +103,7 @@
 
 	.exp-form {
 		position: relative;
-
+		height: 100vh;
 		.titlepart {
 			position: sticky;
 			top: 0px;

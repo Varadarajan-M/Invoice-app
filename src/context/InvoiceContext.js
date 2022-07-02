@@ -4,9 +4,17 @@ import {
 	useState,
 	useMemo,
 	useCallback,
+	useEffect,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getInvoiceData, setInvoiceData } from './helper';
+import {
+	getInvoiceData,
+	setInvoiceData,
+	getLoadedStatus,
+	setLoadedStatus,
+} from './helper';
+import { isToday } from './../util';
+import { toast } from 'react-toastify';
 
 const InvoiceContext = createContext({ invoices: [] });
 
@@ -18,6 +26,18 @@ export const InvoiceContextProvider = ({ children }) => {
 		() => invoices.map((invoice) => invoice.id),
 		[invoices],
 	);
+	const dueCount = useMemo(
+		() => invoices.filter((invoice) => isToday(invoice?.paymentDue)).length,
+		[invoices],
+	);
+
+	useEffect(() => {
+		const alreadyLoaded = getLoadedStatus();
+		if (!alreadyLoaded && dueCount > 0) {
+			toast.info(`${dueCount} Invoice(s) Due Today!`);
+		}
+		!alreadyLoaded && setLoadedStatus();
+	}, [dueCount]);
 
 	// add invoice to list
 	const addInvoice = useCallback(
@@ -101,6 +121,7 @@ export const InvoiceContextProvider = ({ children }) => {
 				deleteInvoice,
 				activeFilter,
 				setActiveFilter,
+				dueCount,
 			}}
 		>
 			{children}

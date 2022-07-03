@@ -13,6 +13,7 @@
 
 	.id-desc {
 		line-height: 22px;
+		word-break: break-word;
 		p {
 			&:nth-of-type(1) {
 				font-weight: 700;

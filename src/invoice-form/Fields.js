@@ -3,7 +3,7 @@ import TextInput from './../lib/components/TextInput';
 import { OPTION_LIST } from './constants';
 import DropdownInput from './../lib/components/DropdownInput';
 import DateInput from './../lib/components/DateInput';
-import { Fragment, useMemo, useEffect } from 'react';
+import { Fragment, useMemo, useEffect, useState } from 'react';
 import StyledLabel from './../lib/components/StyledLabel';
 import { validateItemErrors, validations } from './helper';
 
@@ -148,16 +148,24 @@ export const ToCountry = () => {
 };
 
 export const InvoiceDate = ({ defaultDate }) => {
-	const { control } = useFormContext();
+	const { control, setValue } = useFormContext();
+	const [date, setDate] = useState(defaultDate ?? new Date());
+
+	useEffect(() => setValue('invoiceDate', date), [date, setValue]);
+
 	return (
 		<Controller
 			control={control}
 			name='invoiceDate'
+			defaultValue={defaultDate}
 			render={({ field }) => (
 				<DateInput
 					label='Invoice Date'
-					onChange={field.onChange}
-					selected={field.value ?? defaultDate}
+					onChange={(data) => {
+						field.onChange(data);
+						setDate(data);
+					}}
+					selected={date}
 				/>
 			)}
 		/>

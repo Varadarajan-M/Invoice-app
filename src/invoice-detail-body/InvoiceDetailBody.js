@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 
 import { ItemListHeadings } from '../invoice-form/ItemList';
 import Text from '../lib/components/Text';
-import { formatDateToString, joinKeys } from '../util';
+import { formatDateToString, getDateString, joinKeys } from '../util';
 import { useTheme } from './../context/UIcontext';
 import './InvoiceDetailBody.scss';
 
@@ -62,7 +62,7 @@ const InvoiceDetailBody = ({ matchingInvoice }) => {
 				<div className='payment-due'>
 					<p style={{ ...theme.greySilver }}>Payment Due</p>
 					<p style={{ ...theme.bwText }}>
-						{formatDateToString(paymentDue)}
+						{getDateString(paymentDue)}
 					</p>
 				</div>
 			</div>

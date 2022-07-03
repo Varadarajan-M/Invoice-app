@@ -153,12 +153,11 @@ export const InvoiceDate = ({ defaultDate }) => {
 		<Controller
 			control={control}
 			name='invoiceDate'
-			defaultValue={defaultDate}
 			render={({ field }) => (
 				<DateInput
 					label='Invoice Date'
 					onChange={field.onChange}
-					selected={field.value ?? new Date()}
+					selected={field.value ?? defaultDate}
 				/>
 			)}
 		/>

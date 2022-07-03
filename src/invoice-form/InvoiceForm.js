@@ -30,7 +30,7 @@ const InvoiceForm = (props) => {
 		() => getFormattedFormData(activeData),
 		[activeData],
 	);
-	// TODO rm all the below useMemo's as these are doing very small computations on just strings.
+
 	const classes = useMemo(
 		() => `invoice-form ${className ?? ''}`,
 		[className],
@@ -140,7 +140,7 @@ const InvoiceForm = (props) => {
 							defaultDate={
 								isCreateMode
 									? new Date()
-									: new Date(activeData.createdAt)
+									: new Date(activeData?.createdAt)
 							}
 							defaultPaymentTerm={
 								isCreateMode

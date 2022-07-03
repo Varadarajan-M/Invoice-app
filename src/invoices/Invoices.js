@@ -2,7 +2,7 @@ import React from 'react';
 import { useInvoices } from '../context/InvoiceContext';
 import Card from '@mui/material/Card';
 import arrowRightIcon from '../assets/images/icon-arrow-right.svg';
-import { formatDateToString } from '../util';
+import { getDateString, isTodayOrTomorrow } from '../util';
 import Image from 'react-bootstrap/Image';
 import { useTheme } from '../context/UIcontext';
 import Text from './../lib/components/Text';
@@ -50,13 +50,24 @@ export const Invoices = React.memo(() => {
 										</div>
 										<div
 											className='invoice-due'
-											style={{ ...theme.greyWhiteText }}
+											style={{
+												color: isTodayOrTomorrow(
+													data.paymentDue,
+												)
+													? mode === 'light'
+														? 'red'
+														: '#4caf50'
+													: theme.greyWhiteText.color,
+												fontWeight: isTodayOrTomorrow(
+													data.paymentDue,
+												)
+													? 'bold'
+													: 'normal',
+											}}
 										>
 											<Text>
 												Due{' '}
-												{formatDateToString(
-													data.paymentDue,
-												)}
+												{getDateString(data.paymentDue)}
 											</Text>
 										</div>
 										<div

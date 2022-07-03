@@ -9,6 +9,8 @@ import InvoicesHome from './pages/InvoicesHome';
 import Wrapper from './lib/components/Wrapper';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { ToastContainer } from 'react-toastify';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function App() {
 	const { mode, theme } = useTheme();
@@ -19,11 +21,12 @@ function App() {
 		body.style.background = theme.body.background;
 	}, [mode, theme]);
 	const location = useLocation();
-
+	const isMobileScreen = useMediaQuery('(max-width:909px)');
 	return (
 		<div className='App'>
 			<header className='App-header'>
 				<Navbar />
+
 				{/* All routes here */}
 				<Wrapper>
 					<AnimatePresence exitBeforeEnter>
@@ -40,6 +43,13 @@ function App() {
 						</Routes>
 					</AnimatePresence>
 				</Wrapper>
+				<ToastContainer
+					style={{
+						marginBlock: '2px',
+					}}
+					theme={mode}
+					position={isMobileScreen ? 'bottom-center' : 'top-center'}
+				/>
 			</header>
 		</div>
 	);

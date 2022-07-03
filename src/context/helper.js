@@ -17,3 +17,12 @@ export const getInvoiceData = () => {
 export const setInvoiceData = (data) => {
 	localStorage.setItem('invoicedata', JSON.stringify(data));
 };
+
+export const getLoadedStatus = () => {
+	const status = sessionStorage.getItem('loaded');
+	return status === '1' ? true : false;
+};
+
+export const setLoadedStatus = () => {
+	sessionStorage.setItem('loaded', '1');
+};
